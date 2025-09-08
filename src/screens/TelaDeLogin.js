@@ -1,25 +1,108 @@
-import { View, Image, Text, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 
-export default function TelaDeLogin({ navigation }) {
+import Logo from "..//assets/teste.png"; // logo local
+
+export default function LoginScreen({ navigation }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
-    <View style={{ flex: 1, justifyContent: "flex-start", alignItems: "center", backgroundColor: "white" ,paddingTop: 60, }}>
-      <Image
-        source={require("../assets/casual_dog.png")}
-        style={{ width: "30%", aspectRatio: 1, resizeMode: "contain",}}
-      />
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        {/* Cabeçalho */}
+        <View style={styles.header}>
+          <Image
+            source={Logo}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+          <Text style={styles.title}>Bem-vindo de volta!</Text>
+          <Text style={styles.subtitle}>Faça login para continuar</Text>
+        </View>
 
-      <Text style={{ fontSize: 40, padding:20, }} > Ótimo Dia! </Text>
-      <Text style={{padding:0}}>Seja bem vindo</Text>
+        {/* Formulário */}
+        <TextInput
+          style={styles.input}
+          placeholder="Seu e-mail"
+          placeholderTextColor="#A0A0A0"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Sua senha"
+          placeholderTextColor="#A0A0A0"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
 
-      <TouchableOpacity  onPress={() => navigation.navigate('TelaDeAcesso')} style={{backgroundColor:"green", borderRadius:5, marginTop:30, width:"65%", height:"6%",justifyContent: "center", alignItems: "center", flexDirection: "row"}}>
-        <View style={{width: 35, height: 35, backgroundColor: "white", justifyContent: "center", alignItems: "center", borderRadius: 5,}}><Image source={require("../assets/Google.png")} style={{width:"100%", height:"100%"}}/></View>
-        <Text style={{color:"white",}}>         Fazer login com o google</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("TelaEsqueceuSenha")}
+          style={styles.linkButton}
+        >
+          <Text style={styles.linkText}>Esqueceu a senha?</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate('TelaDeCadastro')} style={{backgroundColor:"white", marginTop:10, width:"65%", height:"6%",justifyContent: "center", alignItems: "center", flexDirection: "row", borderColor:"black", borderWidth:1, borderRadius:5,}}>        
-        <Text> Cadastrar-se </Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.replace("TelaDeAcesso")}
+          style={styles.loginButton}
+        >
+          <Text style={styles.loginButtonText}>ENTRAR</Text>
+        </TouchableOpacity>
 
-    </View>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("TelaCadastro")}
+          style={styles.footerLink}
+        >
+          <Text style={styles.footerText}>
+            Não tem uma conta? <Text style={styles.signUpText}>Cadastre-se</Text>
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  safeArea: { flex: 1, backgroundColor: "#121212" },
+  container: { flex: 1, justifyContent: "center", padding: 30 },
+  header: { alignItems: "center", marginBottom: 40 },
+  logo: { width: 300, height: 100, marginBottom: 20 },
+  title: { fontSize: 28, fontWeight: "bold", color: "#FFFFFF", marginBottom: 10 },
+  subtitle: { fontSize: 16, color: "#A0A0A0" },
+  input: {
+    backgroundColor: "#2C2C2C",
+    borderRadius: 12,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: "#3D3D3D",
+    padding: 15,
+    color: "#FFFFFF",
+    fontSize: 16,
+  },
+  linkButton: { alignSelf: "flex-end", marginBottom: 30 },
+  linkText: { color: "#FFD700", fontWeight: "600" },
+  loginButton: {
+    backgroundColor: "#FFD700",
+    paddingVertical: 18,
+    borderRadius: 12,
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  loginButtonText: { color: "#121212", fontSize: 18, fontWeight: "bold" },
+  footerLink: { alignItems: "center", marginTop: 10 },
+  footerText: { color: "#A0A0A0", fontSize: 14 },
+  signUpText: { color: "#FFD700", fontWeight: "bold" },
+});

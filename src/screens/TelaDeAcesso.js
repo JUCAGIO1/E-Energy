@@ -1,48 +1,43 @@
-import { View, Image, Text, TouchableOpacity, TextInput, } from "react-native";
-import { CheckBox } from "@react-native-community/checkbox"
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
 
 export default function TelaDeAcesso({ navigation }) {
   return (
-    <View style={{ flex: 1, justifyContent: "flex-start",  backgroundColor: "white" ,}}>
-         <Text style={{fontSize: 40, paddingTop: 15, paddingLeft:10}}>Acesse</Text>
-         <Text style={{paddingLeft:10}}> Acesse nosso App </Text>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Bem-vindo!</Text>
+        <Text style={styles.subtitle}>Escolha uma opção para continuar</Text>
 
-         <Text style={{ paddingLeft:10, paddingTop:40}}> E-mail: </Text>
-         <TextInput style={{ borderWidth:1, width:"90%", paddingLeft:10, marginLeft: 15, backgroundColor:"lightblue" }}placeholder="seuemail@gmail.com"></TextInput>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("TelaCasas")}
+        >
+          <Text style={styles.buttonText}>Minhas Casas</Text>
+        </TouchableOpacity>
 
-         <Text style={{ paddingLeft:15, paddingTop:30}}>Senha:</Text>
-         <TextInput style={{ borderWidth:1, width:"90%", paddingLeft:10, marginLeft: 15, backgroundColor:"lightblue" }}placeholder="******"></TextInput>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Perfil do Usuário</Text>
+        </TouchableOpacity>
 
-         {/*<CheckBox></CheckBox>*/}
-
-
-
-         <Text style={{paddingLeft:"50%", paddingTop:20 }}>Esqueci minha senha</Text>
-
-         <View style={{flexDirection:"row", justifyContent:"space-between", }}>
-          <TouchableOpacity onPress={() => navigation.navigate('TelaCasas')} style={{ marginLeft:20, borderRadius:5, backgroundColor:"green", marginTop:30, width:"40%", height:"120%",justifyContent: "center", alignItems: "center", flexDirection: "row"}}>
-            <Text>Acessar</Text>
-          </TouchableOpacity>
-          <TouchableOpacity  onPress={() => navigation.navigate('Login')} style={{ borderWidth:1, borderRadius:5, marginRight:20, backgroundColor:"white", marginTop:30, width:"40%", height:"120%",justifyContent: "center", alignItems: "center", flexDirection: "row"}}>
-            <Text>Voltar</Text>
-          </TouchableOpacity>
-         </View>
-
-         <Text style={{ marginTop: 80, textAlign: "center" }}> ------------ Outras formas de login ------------ </Text>
-
-
-
-         <View style={{flexDirection:"row", justifyContent:"space-between", }}>
-          <Image
-          source={require("../assets/Google.png")}
-          style={{marginLeft:"22%"}}>
-          </Image>
-
-          <Image 
-          source={require("../assets/Facebook.png")}
-          style={{marginRight:"24%"}}>
-          </Image>
-         </View>
-    </View>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Configurações</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  safeArea: { flex: 1, backgroundColor: "#121212" },
+  container: { flex: 1, justifyContent: "center", alignItems: "center", padding: 30 },
+  title: { fontSize: 28, fontWeight: "bold", color: "#FFFFFF", marginBottom: 10 },
+  subtitle: { fontSize: 16, color: "#A0A0A0", marginBottom: 30 },
+  button: {
+    width: "80%",
+    backgroundColor: "#FFD700",
+    padding: 15,
+    borderRadius: 12,
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  buttonText: { fontSize: 16, fontWeight: "bold", color: "#121212" },
+});

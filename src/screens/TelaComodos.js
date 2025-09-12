@@ -6,10 +6,23 @@ export default function TelaComodos({ route }) {
   const comodos = ["Sala", "Cozinha", "Quarto", "Banheiro"];
   const [releStatus, setReleStatus] = useState(false);
 
-  const toggleRele = () => {
+  const toggleRele = async () => {
     const novoEstado = !releStatus;
     setReleStatus(novoEstado);
-    Alert.alert("Relé", `Relé ${novoEstado ? "Ativado" : "Desativado"}`);
+
+    try {
+      const url = novoEstado
+        ? "http://192.168.0.150/ligar"   // Troque pelo IP do seu ESP32
+        : "http://192.168.0.150/desligar";
+
+      const response = await fetch(url);
+      const texto = await response.text();
+
+      Alert.alert("Relé", texto); // Exibe a resposta do ESP32
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível comunicar com o ESP32");
+      setReleStatus(!novoEstado); // Reverte o estado se a requisição falhar
+    }
   };
 
   return (
@@ -21,6 +34,7 @@ export default function TelaComodos({ route }) {
           <TouchableOpacity
             key={index}
             style={styles.roomButton}
+            // ✅ corrigido: interpolação com crase
             onPress={() => Alert.alert("Consumo", `Energia gasta por ${comodo}`)}
           >
             <Text style={styles.roomText}>{comodo}</Text>
@@ -28,7 +42,9 @@ export default function TelaComodos({ route }) {
         ))}
 
         <TouchableOpacity style={styles.releButton} onPress={toggleRele}>
-          <Text style={styles.releText}>{releStatus ? "Desativar Relé" : "Ativar Relé"}</Text>
+          <Text style={styles.releText}>
+            {releStatus ? "Desativar Relé" : "Ativar Relé"}
+          </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

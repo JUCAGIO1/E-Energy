@@ -9,7 +9,7 @@ import {
   StyleSheet,
 } from "react-native";
 
-import Logo from "..//assets/teste.png"; // logo local
+import Logo from "..//assets/logo_e_energy.png"; // logo local
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");

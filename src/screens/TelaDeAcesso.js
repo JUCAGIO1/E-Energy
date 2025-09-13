@@ -10,14 +10,14 @@ export default function TelaDeAcesso({ navigation }) {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("MinhasCasas")}
+        onPress={() => navigation.navigate("TelaCasas")}
       >
         <Text style={styles.buttonText}>Minhas Casas</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Perfil")}
+        onPress={() => navigation.navigate("TelaPerfil")}
       >
         <Text style={styles.buttonText}>Perfil do Usuário</Text>
       </TouchableOpacity>

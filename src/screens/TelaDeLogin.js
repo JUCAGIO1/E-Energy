@@ -63,7 +63,7 @@ export default function LoginScreen({ navigation }) {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate("TelaCadastro")}
+          onPress={() => navigation.navigate("Cadastro")}
           style={styles.footerLink}
         >
           <Text style={styles.footerText}>

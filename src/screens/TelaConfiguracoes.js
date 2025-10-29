@@ -12,13 +12,13 @@ export default function TelaConfiguracoes({ navigation }) {
       <Text style={[styles.title, { color: isDark ? "#FFD700" : "#121212" }]}>Configurações</Text>
 
       <TouchableOpacity style={styles.button} onPress={toggleTheme}>
-        <Text style={[styles.buttonText, { color: isDark ? "#121212" : "#FFD700" }]}>
+        <Text style={[styles.buttonText, { color: isDark ? "#FFD700" : "#FFD700" }]}>
           Alternar Tema {isDark ? "→ Claro" : "→ Escuro"}
         </Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
-        <Text style={[styles.buttonText, { color: isDark ? "#121212" : "#FFD700" }]}>Voltar</Text>
+        <Text style={[styles.buttonText, { color: isDark ? "#FFD700" : "#FFD700" }]}>Voltar</Text>
       </TouchableOpacity>
     </View>
   );

@@ -1,10 +1,50 @@
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Alert } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+const getDados = async () => {
+  try {
+    const response = await axios.get('http://localhost:3000/api/dados')
+    return response.data;
+  }
+  catch (error) {
+    console.error('Error:', error);
+    return null;
+  };
+}
+
+const getComodos = async () => {
+  try {
+    const response = await axios.get('http://localhost:3000/api/comodos')
+    return response.data;
+  }
+  catch (error) {
+    console.error('Error:', error);
+    return null;
+  };
+}
 
 export default function TelaComodos({ route }) {
   const { nomeCasa } = route.params;
-  const comodos = ["Sala", "Cozinha", "Quarto", "Banheiro"];
   const [releStatus, setReleStatus] = useState(false);
+  const [dados, setDados] = useState([]);
+  const [comodos, setComodos] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchedComodos = await getComodos();
+      const fetchedDados = await getDados();
+
+      if (fetchedComodos) {
+        setComodos(fetchedComodos);
+      }
+      if (fetchedDados) {
+        setDados(fetchedDados);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const toggleRele = async () => {
     const novoEstado = !releStatus;
@@ -12,7 +52,7 @@ export default function TelaComodos({ route }) {
 
     try {
       const url = novoEstado
-        ? "http://192.168.0.150/ligar"   // Troque pelo IP do seu ESP32
+        ? "http://192.168.0.150/ligar"
         : "http://192.168.0.150/desligar";
 
       const response = await fetch(url);
@@ -25,6 +65,28 @@ export default function TelaComodos({ route }) {
     }
   };
 
+  const showComodoData = (comodo) => {
+    const comodoDados = dados.filter(dado => dado.comodo_id === comodo.id);
+
+    if (comodoDados.length > 0) {
+      const consumo = comodoDados[0].consumo || "N/A";
+      const potencia = comodoDados[0].potencia || "N/A";
+      const custo = comodoDados[0].custo || "N/A";
+
+      Alert.alert(
+        `Consumo de energia no ${comodo.nome}`,
+        `Consumo: ${consumo} kWh\nPotência: ${potencia} W\nCusto: R$ ${custo}`,
+        [{ text: "OK" }]
+      );
+    } else {
+      Alert.alert(
+        `Consumo de energia no ${comodo.nome}`,
+        "Não há dados disponíveis para este cômodo.",
+        [{ text: "OK" }]
+      );
+    }
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
@@ -34,10 +96,9 @@ export default function TelaComodos({ route }) {
           <TouchableOpacity
             key={index}
             style={styles.roomButton}
-            // ✅ corrigido: interpolação com crase
-            onPress={() => Alert.alert("Consumo", `Energia gasta por ${comodo}`)}
+            onPress={() => showComodoData(comodo)}
           >
-            <Text style={styles.roomText}>{comodo}</Text>
+            <Text style={styles.roomText}>{comodo.nome}</Text>
           </TouchableOpacity>
         ))}
 
@@ -74,3 +135,92 @@ const styles = StyleSheet.create({
   },
   releText: { color: "#121212", fontSize: 16, fontWeight: "bold" },
 });
+
+/*const express = require("express");
+const bodyParser = require("body-parser");
+const sqlite3 = require("sqlite3").verbose();
+const cors = require("cors");
+
+const app = express();
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+const db = new sqlite3.Database("eenergy.db");
+
+db.run("PRAGMA foreign_keys = ON");
+
+db.run(`CREATE TABLE IF NOT EXISTS leituras (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  corrente REAL,
+  potencia REAL,
+  consumo REAL,
+  custo REAL,
+  rele_estado INTEGER,
+  data_hora DATETIME DEFAULT CURRENT_TIMESTAMP,
+  comodo_id INTEGER,
+  FOREIGN KEY (comodo_id) REFERENCES comodos(id) ON DELETE SET NULL
+)`);
+
+db.run(`CREATE TABLE IF NOT EXISTS comodos (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  nome VARCHAR(40)
+)`);
+
+app.post("/api/dados", (req, res) => {
+  const { corrente, potencia, consumo, custo, rele_estado, comodo_id } = req.body;
+  db.run(
+    `INSERT INTO leituras (corrente, potencia, consumo, custo, rele_estado, comodo_id)
+     VALUES (?, ?, ?, ?, ?, ?)`,
+    [corrente, potencia, consumo, custo, rele_estado, comodo_id],
+    (err) => {
+      if (err) {
+        console.error(err.message);
+        res.status(500).send("Erro ao salvar dados");
+      } else {
+        res.status(200).send("OK");
+      }
+    }
+  );
+});
+
+app.get("/api/dados", (req, res) => {
+  db.all("SELECT * FROM leituras ORDER BY id DESC", [], (err, rows) => {
+    if (err) {
+      res.status(500).send(err.message);
+    } else {
+      res.status(200).json(rows);
+    }
+  });
+});
+
+app.post("/api/comodos", (req, res) => {
+  const { nome } = req.body;
+  db.run(
+    `INSERT INTO comodos (nome)
+     VALUES (?)`,
+    [nome],
+    (err) => {
+      if (err) {
+        console.error(err.message);
+        res.status(500).send("Erro ao salvar dados");
+      } else {
+        res.status(200).send("OK");
+      }
+    }
+  );
+});
+
+app.get("/api/comodos", (req, res) => {
+  db.all("SELECT * FROM comodos ORDER BY id DESC", [], (err, rows) => {
+    if (err) {
+      res.status(500).send(err.message);
+    } else {
+      res.status(200).json(rows);
+    }
+  });
+});
+
+const PORT = 3000;
+app.listen(PORT, () => console.log(`Servidor rodando em http://localhost:${PORT}`));
+*/

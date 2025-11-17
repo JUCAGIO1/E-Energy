@@ -4,7 +4,7 @@ import axios from "axios";
 
 const getDados = async () => {
   try {
-    const response = await axios.get('http://localhost:3000/api/dados')
+    const response = await axios.get('https://e-energy-api.onrender.com/api/dados')
     return response.data;
   }
   catch (error) {
@@ -15,7 +15,7 @@ const getDados = async () => {
 
 const getComodos = async () => {
   try {
-    const response = await axios.get('http://localhost:3000/api/comodos')
+    const response = await axios.get('https://e-energy-api.onrender.com/api/comodos')
     return response.data;
   }
   catch (error) {

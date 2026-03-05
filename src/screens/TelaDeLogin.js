@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   SafeAreaView,
   View,
@@ -9,14 +9,18 @@ import {
   StyleSheet,
 } from "react-native";
 
-import Logo from "..//assets/logo_e_energy.png"; // logo local
+import { ThemeContext } from "../context/ThemeContext";
+import Logo from "../assets/logo_e_energy.png"; 
 
 export default function LoginScreen({ navigation }) {
+  const { theme } = useContext(ThemeContext);
+  const isDark = theme === "dark";
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: isDark ? "#121212" : "#F5F5F5" }]}>
       <View style={styles.container}>
         {/* Cabeçalho */}
         <View style={styles.header}>
@@ -25,24 +29,32 @@ export default function LoginScreen({ navigation }) {
             style={styles.logo}
             resizeMode="contain"
           />
-          <Text style={styles.title}>Bem-vindo de volta!</Text>
-          <Text style={styles.subtitle}>Faça login para continuar</Text>
+          <Text style={[styles.title, { color: isDark ? "#FFFFFF" : "#121212" }]}>Bem-vindo de volta!</Text>
+          <Text style={[styles.subtitle, { color: isDark ? "#A0A0A0" : "#666666" }]}>Faça login para continuar</Text>
         </View>
 
         {/* Formulário */}
         <TextInput
-          style={styles.input}
+          style={[styles.input, {
+            backgroundColor: isDark ? "#2C2C2C" : "#FFFFFF",
+            borderColor: isDark ? "#3D3D3D" : "#CCCCCC",
+            color: isDark ? "#FFFFFF" : "#121212"
+          }]}
           placeholder="Seu e-mail"
-          placeholderTextColor="#A0A0A0"
+          placeholderTextColor={isDark ? "#A0A0A0" : "#666666"}
           keyboardType="email-address"
           autoCapitalize="none"
           value={email}
           onChangeText={setEmail}
         />
         <TextInput
-          style={styles.input}
+          style={[styles.input, {
+            backgroundColor: isDark ? "#2C2C2C" : "#FFFFFF",
+            borderColor: isDark ? "#3D3D3D" : "#CCCCCC",
+            color: isDark ? "#FFFFFF" : "#121212"
+          }]}
           placeholder="Sua senha"
-          placeholderTextColor="#A0A0A0"
+          placeholderTextColor={isDark ? "#A0A0A0" : "#666666"}
           secureTextEntry
           value={password}
           onChangeText={setPassword}
@@ -52,7 +64,7 @@ export default function LoginScreen({ navigation }) {
           onPress={() => navigation.navigate("TelaEsqueceuSenha")}
           style={styles.linkButton}
         >
-          <Text style={styles.linkText}>Esqueceu a senha?</Text>
+          <Text style={[styles.linkText, { color: isDark ? "#FFD700" : "#B8860B" }]}>Esqueceu a senha?</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -66,8 +78,8 @@ export default function LoginScreen({ navigation }) {
           onPress={() => navigation.navigate("Cadastro")}
           style={styles.footerLink}
         >
-          <Text style={styles.footerText}>
-            Não tem uma conta? <Text style={styles.signUpText}>Cadastre-se</Text>
+          <Text style={[styles.footerText, { color: isDark ? "#A0A0A0" : "#666666" }]}>
+            Não tem uma conta? <Text style={[styles.signUpText, { color: isDark ? "#FFD700" : "#B8860B" }]}>Cadastre-se</Text>
           </Text>
         </TouchableOpacity>
       </View>
@@ -76,24 +88,21 @@ export default function LoginScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: "#121212" },
+  safeArea: { flex: 1 },
   container: { flex: 1, justifyContent: "center", padding: 30 },
   header: { alignItems: "center", marginBottom: 40 },
   logo: { width: 300, height: 100, marginBottom: 20 },
-  title: { fontSize: 28, fontWeight: "bold", color: "#FFFFFF", marginBottom: 10 },
-  subtitle: { fontSize: 16, color: "#A0A0A0" },
+  title: { fontSize: 28, fontWeight: "bold", marginBottom: 10 },
+  subtitle: { fontSize: 16 },
   input: {
-    backgroundColor: "#2C2C2C",
     borderRadius: 12,
     marginBottom: 20,
     borderWidth: 1,
-    borderColor: "#3D3D3D",
     padding: 15,
-    color: "#FFFFFF",
     fontSize: 16,
   },
   linkButton: { alignSelf: "flex-end", marginBottom: 30 },
-  linkText: { color: "#FFD700", fontWeight: "600" },
+  linkText: { fontWeight: "600" },
   loginButton: {
     backgroundColor: "#FFD700",
     paddingVertical: 18,
@@ -103,6 +112,6 @@ const styles = StyleSheet.create({
   },
   loginButtonText: { color: "#121212", fontSize: 18, fontWeight: "bold" },
   footerLink: { alignItems: "center", marginTop: 10 },
-  footerText: { color: "#A0A0A0", fontSize: 14 },
-  signUpText: { color: "#FFD700", fontWeight: "bold" },
+  footerText: { fontSize: 14 },
+  signUpText: { fontWeight: "bold" },
 });

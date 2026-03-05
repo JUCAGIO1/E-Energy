@@ -1,6 +1,7 @@
+import React, { useContext, useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Alert } from "react-native";
-import { useState, useEffect } from "react";
 import axios from "axios";
+import { ThemeContext } from "../context/ThemeContext";
 
 const getDados = async () => {
   try {
@@ -25,6 +26,9 @@ const getComodos = async () => {
 }
 
 export default function TelaComodos({ route }) {
+  const { theme } = useContext(ThemeContext);
+  const isDark = theme === "dark";
+  
   const { nomeCasa } = route.params;
   const [releStatus, setReleStatus] = useState(false);
   const [dados, setDados] = useState([]);
@@ -88,17 +92,23 @@ export default function TelaComodos({ route }) {
   }
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: isDark ? "#121212" : "#F5F5F5" }]}>
       <View style={styles.container}>
-        <Text style={styles.title}>Cômodos de {nomeCasa}</Text>
+        <Text style={[styles.title, { color: isDark ? "#FFFFFF" : "#121212" }]}>Cômodos de {nomeCasa}</Text>
 
         {comodos.map((comodo, index) => (
           <TouchableOpacity
             key={index}
-            style={styles.roomButton}
+            style={[
+              styles.roomButton, 
+              { 
+                backgroundColor: isDark ? "#2C2C2C" : "#FFFFFF", 
+                borderColor: isDark ? "#2C2C2C" : "#CCCCCC" 
+              }
+            ]}
             onPress={() => showComodoData(comodo)}
           >
-            <Text style={styles.roomText}>{comodo.nome}</Text>
+            <Text style={[styles.roomText, { color: isDark ? "#FFD700" : "#D4AF37" }]}>{comodo.nome}</Text>
           </TouchableOpacity>
         ))}
 
@@ -113,18 +123,18 @@ export default function TelaComodos({ route }) {
 }
 
 const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: "#121212" },
+  safeArea: { flex: 1 },
   container: { flex: 1, alignItems: "center", paddingTop: 40 },
-  title: { fontSize: 24, color: "#FFFFFF", marginBottom: 20 },
+  title: { fontSize: 24, marginBottom: 20 },
   roomButton: {
-    backgroundColor: "#2C2C2C",
     padding: 15,
     borderRadius: 12,
+    borderWidth: 1,
     marginBottom: 15,
     width: "80%",
     alignItems: "center",
   },
-  roomText: { color: "#FFD700", fontSize: 16, fontWeight: "bold" },
+  roomText: { fontSize: 16, fontWeight: "bold" },
   releButton: {
     marginTop: 30,
     backgroundColor: "#FFD700",
@@ -135,92 +145,3 @@ const styles = StyleSheet.create({
   },
   releText: { color: "#121212", fontSize: 16, fontWeight: "bold" },
 });
-
-/*const express = require("express");
-const bodyParser = require("body-parser");
-const sqlite3 = require("sqlite3").verbose();
-const cors = require("cors");
-
-const app = express();
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-const db = new sqlite3.Database("eenergy.db");
-
-db.run("PRAGMA foreign_keys = ON");
-
-db.run(`CREATE TABLE IF NOT EXISTS leituras (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  corrente REAL,
-  potencia REAL,
-  consumo REAL,
-  custo REAL,
-  rele_estado INTEGER,
-  data_hora DATETIME DEFAULT CURRENT_TIMESTAMP,
-  comodo_id INTEGER,
-  FOREIGN KEY (comodo_id) REFERENCES comodos(id) ON DELETE SET NULL
-)`);
-
-db.run(`CREATE TABLE IF NOT EXISTS comodos (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  nome VARCHAR(40)
-)`);
-
-app.post("/api/dados", (req, res) => {
-  const { corrente, potencia, consumo, custo, rele_estado, comodo_id } = req.body;
-  db.run(
-    `INSERT INTO leituras (corrente, potencia, consumo, custo, rele_estado, comodo_id)
-     VALUES (?, ?, ?, ?, ?, ?)`,
-    [corrente, potencia, consumo, custo, rele_estado, comodo_id],
-    (err) => {
-      if (err) {
-        console.error(err.message);
-        res.status(500).send("Erro ao salvar dados");
-      } else {
-        res.status(200).send("OK");
-      }
-    }
-  );
-});
-
-app.get("/api/dados", (req, res) => {
-  db.all("SELECT * FROM leituras ORDER BY id DESC", [], (err, rows) => {
-    if (err) {
-      res.status(500).send(err.message);
-    } else {
-      res.status(200).json(rows);
-    }
-  });
-});
-
-app.post("/api/comodos", (req, res) => {
-  const { nome } = req.body;
-  db.run(
-    `INSERT INTO comodos (nome)
-     VALUES (?)`,
-    [nome],
-    (err) => {
-      if (err) {
-        console.error(err.message);
-        res.status(500).send("Erro ao salvar dados");
-      } else {
-        res.status(200).send("OK");
-      }
-    }
-  );
-});
-
-app.get("/api/comodos", (req, res) => {
-  db.all("SELECT * FROM comodos ORDER BY id DESC", [], (err, rows) => {
-    if (err) {
-      res.status(500).send(err.message);
-    } else {
-      res.status(200).json(rows);
-    }
-  });
-});
-
-const PORT = 3000;
-app.listen(PORT, () => console.log(`Servidor rodando em http://localhost:${PORT}`));
-*/

@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
-import Logo from "..//assets/logo_e_energy.png"; // logo no topo
+import { ThemeContext } from "../context/ThemeContext";
+import Logo from "../assets/logo_e_energy.png"; 
 
 export default function TelaDeAcesso({ navigation }) {
+  const { theme } = useContext(ThemeContext);
+  const isDark = theme === "dark";
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: isDark ? "#121212" : "#F5F5F5" }]}>
       <Image source={Logo} style={styles.logo} resizeMode="contain" />
-      <Text style={styles.title}>Menu Principal</Text>
+      <Text style={[styles.title, { color: isDark ? "#FFD700" : "#121212" }]}>Menu Principal</Text>
 
       <TouchableOpacity
         style={styles.button}
@@ -33,9 +37,9 @@ export default function TelaDeAcesso({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#121212", padding: 20 },
+  container: { flex: 1, justifyContent: "center", alignItems: "center", padding: 20 },
   logo: { width: 200, height: 200, marginBottom: 30 },
-  title: { fontSize: 24, fontWeight: "bold", color: "#FFD700", marginBottom: 40 },
+  title: { fontSize: 24, fontWeight: "bold", marginBottom: 40 },
   button: {
     backgroundColor: "#FFD700",
     paddingVertical: 15,

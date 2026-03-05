@@ -1,33 +1,54 @@
+import React, { useContext } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
+import { ThemeContext } from "../context/ThemeContext";
 
 export default function TelaCadastro({ navigation }) {
+  const { theme } = useContext(ThemeContext);
+  const isDark = theme === "dark";
+
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: isDark ? "#121212" : "#F5F5F5" }]}>
       <View style={styles.container}>
-        <Text style={styles.title}>Criar Conta</Text>
+        <Text style={[styles.title, { color: isDark ? "#FFFFFF" : "#121212" }]}>Criar Conta</Text>
 
         <TextInput 
-          style={styles.input} 
+          style={[styles.input, { 
+            backgroundColor: isDark ? "#2C2C2C" : "#FFFFFF", 
+            borderColor: isDark ? "#3D3D3D" : "#CCCCCC",
+            color: isDark ? "#FFFFFF" : "#121212"
+          }]} 
           placeholder="Nome completo" 
-          placeholderTextColor="#A0A0A0"
+          placeholderTextColor={isDark ? "#A0A0A0" : "#666666"}
         />
         <TextInput 
-          style={styles.input} 
+          style={[styles.input, { 
+            backgroundColor: isDark ? "#2C2C2C" : "#FFFFFF", 
+            borderColor: isDark ? "#3D3D3D" : "#CCCCCC",
+            color: isDark ? "#FFFFFF" : "#121212"
+          }]} 
           placeholder="E-mail" 
           keyboardType="email-address"
-          placeholderTextColor="#A0A0A0"
+          placeholderTextColor={isDark ? "#A0A0A0" : "#666666"}
         />
         <TextInput 
-          style={styles.input} 
+          style={[styles.input, { 
+            backgroundColor: isDark ? "#2C2C2C" : "#FFFFFF", 
+            borderColor: isDark ? "#3D3D3D" : "#CCCCCC",
+            color: isDark ? "#FFFFFF" : "#121212"
+          }]} 
           placeholder="Senha" 
           secureTextEntry 
-          placeholderTextColor="#A0A0A0"
+          placeholderTextColor={isDark ? "#A0A0A0" : "#666666"}
         />
         <TextInput 
-          style={styles.input} 
+          style={[styles.input, { 
+            backgroundColor: isDark ? "#2C2C2C" : "#FFFFFF", 
+            borderColor: isDark ? "#3D3D3D" : "#CCCCCC",
+            color: isDark ? "#FFFFFF" : "#121212"
+          }]} 
           placeholder="Confirmar senha" 
           secureTextEntry 
-          placeholderTextColor="#A0A0A0"
+          placeholderTextColor={isDark ? "#A0A0A0" : "#666666"}
         />
 
         <TouchableOpacity style={styles.button}>
@@ -35,7 +56,7 @@ export default function TelaCadastro({ navigation }) {
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.link}>
-          <Text style={styles.linkText}>Já tenho conta</Text>
+          <Text style={[styles.linkText, { color: isDark ? "#FFD700" : "#B8860B" }]}>Já tenho conta</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -43,27 +64,24 @@ export default function TelaCadastro({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: "#121212" }, // fundo preto
+  safeArea: { flex: 1 },
   container: { flex: 1, justifyContent: "center", padding: 20 },
-  title: { fontSize: 28, fontWeight: "bold", marginBottom: 30, textAlign: "center", color: "#FFFFFF" },
+  title: { fontSize: 28, fontWeight: "bold", marginBottom: 30, textAlign: "center" },
   input: { 
     borderWidth: 1, 
-    borderColor: "#3D3D3D", 
     borderRadius: 12, 
     padding: 15, 
     marginBottom: 20, 
-    backgroundColor: "#2C2C2C", 
-    color: "#FFFFFF",
     fontSize: 16,
   },
   button: { 
-    backgroundColor: "#FFD700", // amarelo logo
+    backgroundColor: "#FFD700", 
     padding: 15, 
     borderRadius: 12, 
     alignItems: "center",
     marginTop: 10,
   },
-  buttonText: { color: "#121212", fontSize: 16, fontWeight: "bold" }, // texto escuro sobre amarelo
+  buttonText: { color: "#121212", fontSize: 16, fontWeight: "bold" },
   link: { marginTop: 20, alignItems: "center" },
-  linkText: { color: "#FFD700", fontWeight: "bold" }, // amarelo para destaque
+  linkText: { fontWeight: "bold" },
 });

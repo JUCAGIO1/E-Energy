@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Alert } from "react-native";
 import axios from "axios";
-import { ThemeContext } from "../context/ThemeContext";
 
 const getDados = async () => {
   try {
@@ -26,9 +25,6 @@ const getComodos = async () => {
 }
 
 export default function TelaComodos({ route }) {
-  const { theme } = useContext(ThemeContext);
-  const isDark = theme === "dark";
-  
   const { nomeCasa } = route.params;
   const [releStatus, setReleStatus] = useState(false);
   const [dados, setDados] = useState([]);
@@ -92,9 +88,9 @@ export default function TelaComodos({ route }) {
   }
 
   return (
-    <SafeAreaView style={[styles.safeArea, { backgroundColor: isDark ? "#121212" : "#F5F5F5" }]}>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor:"#121212" }]}>
       <View style={styles.container}>
-        <Text style={[styles.title, { color: isDark ? "#FFFFFF" : "#121212" }]}>Cômodos de {nomeCasa}</Text>
+        <Text style={[styles.title, { color: "#FFFFFF" }]}>Cômodos de {nomeCasa}</Text>
 
         {comodos.map((comodo, index) => (
           <TouchableOpacity
@@ -102,13 +98,13 @@ export default function TelaComodos({ route }) {
             style={[
               styles.roomButton, 
               { 
-                backgroundColor: isDark ? "#2C2C2C" : "#FFFFFF", 
-                borderColor: isDark ? "#2C2C2C" : "#CCCCCC" 
+                backgroundColor: "#2C2C2C", 
+                borderColor: "#3D3D3D" 
               }
             ]}
             onPress={() => showComodoData(comodo)}
           >
-            <Text style={[styles.roomText, { color: isDark ? "#FFD700" : "#D4AF37" }]}>{comodo.nome}</Text>
+            <Text style={[styles.roomText, { color: "#FFFFFF" }]}>{comodo.nome}</Text>
           </TouchableOpacity>
         ))}
 

@@ -2,8 +2,6 @@ import React from "react";
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { ThemeProvider, ThemeContext } from "./src/context/ThemeContext";
-
 import TelaDeLogin from "./src/screens/TelaDeLogin";
 import TelaDeAcesso from "./src/screens/TelaDeAcesso";
 import TelaDeCadastro from "./src/screens/TelaDeCadastro";
@@ -17,10 +15,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <ThemeContext.Consumer>
-        {({ theme }) => (
-          <NavigationContainer theme={theme === "light" ? DefaultTheme : DarkTheme}>
+          <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
               <Stack.Screen name="Login" component={TelaDeLogin} />
               <Stack.Screen name="TelaDeAcesso" component={TelaDeAcesso} />
@@ -32,8 +27,5 @@ export default function App() {
               <Stack.Screen name="TelaEsqueceuSenha" component={TelaEsqueceuSenha} />
             </Stack.Navigator>
           </NavigationContainer>
-        )}
-      </ThemeContext.Consumer>
-    </ThemeProvider>
   );
 }

@@ -1,24 +1,14 @@
 import React, { useContext } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { ThemeContext } from "../context/ThemeContext";
 
 export default function TelaConfiguracoes({ navigation }) {
-  const { theme, toggleTheme } = useContext(ThemeContext);
-
-  const isDark = theme === "dark";
 
   return (
-    <View style={[styles.container, { backgroundColor: isDark ? "#121212" : "#fff" }]}>
-      <Text style={[styles.title, { color: isDark ? "#FFD700" : "#121212" }]}>Configurações</Text>
-
-      <TouchableOpacity style={styles.button} onPress={toggleTheme}>
-        <Text style={[styles.buttonText, { color: isDark ? "#FFD700" : "#FFD700" }]}>
-          Alternar Tema {isDark ? "→ Claro" : "→ Escuro"}
-        </Text>
-      </TouchableOpacity>
+    <View style={[styles.container, { backgroundColor: "#121212" }]}>
+      <Text style={[styles.title, { color: "#FFD700" }]}>Configurações</Text>
 
       <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
-        <Text style={[styles.buttonText, { color: isDark ? "#FFD700" : "#FFD700" }]}>Voltar</Text>
+        <Text style={[styles.buttonText, { color: "#FFD700" }]}>Voltar</Text>
       </TouchableOpacity>
     </View>
   );

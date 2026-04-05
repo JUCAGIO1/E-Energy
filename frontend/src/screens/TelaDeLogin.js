@@ -9,18 +9,14 @@ import {
   StyleSheet,
 } from "react-native";
 
-import { ThemeContext } from "../context/ThemeContext";
 import Logo from "../assets/logo_e_energy.png"; 
 
 export default function LoginScreen({ navigation }) {
-  const { theme } = useContext(ThemeContext);
-  const isDark = theme === "dark";
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
-    <SafeAreaView style={[styles.safeArea, { backgroundColor: isDark ? "#121212" : "#F5F5F5" }]}>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor:"#121212"  }]}>
       <View style={styles.container}>
         {/* Cabeçalho */}
         <View style={styles.header}>
@@ -29,19 +25,19 @@ export default function LoginScreen({ navigation }) {
             style={styles.logo}
             resizeMode="contain"
           />
-          <Text style={[styles.title, { color: isDark ? "#FFFFFF" : "#121212" }]}>Bem-vindo de volta!</Text>
-          <Text style={[styles.subtitle, { color: isDark ? "#A0A0A0" : "#666666" }]}>Faça login para continuar</Text>
+          <Text style={[styles.title, { color:"#FFFFFF" }]}>Bem-vindo de volta!</Text>
+          <Text style={[styles.subtitle, { color: "#A0A0A0" }]}>Faça login para continuar</Text>
         </View>
 
         {/* Formulário */}
         <TextInput
           style={[styles.input, {
-            backgroundColor: isDark ? "#2C2C2C" : "#FFFFFF",
-            borderColor: isDark ? "#3D3D3D" : "#CCCCCC",
-            color: isDark ? "#FFFFFF" : "#121212"
+            backgroundColor:"#2C2C2C",
+            borderColor: "#3D3D3D",
+            color:"#FFFFFF"
           }]}
           placeholder="Seu e-mail"
-          placeholderTextColor={isDark ? "#A0A0A0" : "#666666"}
+          placeholderTextColor="#A0A0A0" 
           keyboardType="email-address"
           autoCapitalize="none"
           value={email}
@@ -49,12 +45,12 @@ export default function LoginScreen({ navigation }) {
         />
         <TextInput
           style={[styles.input, {
-            backgroundColor: isDark ? "#2C2C2C" : "#FFFFFF",
-            borderColor: isDark ? "#3D3D3D" : "#CCCCCC",
-            color: isDark ? "#FFFFFF" : "#121212"
+            backgroundColor: "#2C2C2C" ,
+            borderColor: "#3D3D3D",
+            color: "#FFFFFF"
           }]}
           placeholder="Sua senha"
-          placeholderTextColor={isDark ? "#A0A0A0" : "#666666"}
+          placeholderTextColor="#A0A0A0"
           secureTextEntry
           value={password}
           onChangeText={setPassword}
@@ -64,7 +60,7 @@ export default function LoginScreen({ navigation }) {
           onPress={() => navigation.navigate("TelaEsqueceuSenha")}
           style={styles.linkButton}
         >
-          <Text style={[styles.linkText, { color: isDark ? "#FFD700" : "#B8860B" }]}>Esqueceu a senha?</Text>
+          <Text style={[styles.linkText, { color:"#FFD700" }]}>Esqueceu a senha?</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -78,8 +74,8 @@ export default function LoginScreen({ navigation }) {
           onPress={() => navigation.navigate("Cadastro")}
           style={styles.footerLink}
         >
-          <Text style={[styles.footerText, { color: isDark ? "#A0A0A0" : "#666666" }]}>
-            Não tem uma conta? <Text style={[styles.signUpText, { color: isDark ? "#FFD700" : "#B8860B" }]}>Cadastre-se</Text>
+          <Text style={[styles.footerText, { color: "#A0A0A0" }]}>
+            Não tem uma conta? <Text style={[styles.signUpText, { color: "#FFD700" }]}>Cadastre-se</Text>
           </Text>
         </TouchableOpacity>
       </View>

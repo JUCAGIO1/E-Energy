@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
-import Logo from "../assets/logo_e_energy.png"; 
+import Logo from "../../assets/logo_e_energy.png"; 
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 

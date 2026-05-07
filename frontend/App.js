@@ -2,14 +2,14 @@ import React from "react";
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import TelaDeLogin from "./src/screens/TelaDeLogin";
-import TelaDeAcesso from "./src/screens/TelaDeAcesso";
-import TelaDeCadastro from "./src/screens/TelaDeCadastro";
-import TelaCasas from "./src/screens/TelaCasas";
-import TelaComodos from "./src/screens/TelaComodos";
-import TelaPerfil from "./src/screens/TelaPerfil";
-import TelaConfiguracoes from "./src/screens/TelaConfiguracoes";
-import TelaEsqueceuSenha from "./src/screens/TelaEsqueceuSenha";
+import TelaDeLogin from "./src/screens/Login/TelaDeLogin";
+import TelaDeAcesso from "./src/screens/Acesso/TelaDeAcesso";
+import TelaDeCadastro from "./src/screens/Cadastro/TelaDeCadastro";
+import TelaCasas from "./src/screens/Casa/TelaCasas";
+import TelaComodos from "./src/screens/Comodo/TelaComodos";
+import TelaPerfil from "./src/screens/Perfil/TelaPerfil";
+import TelaConfiguracoes from "./src/screens/config/TelaConfiguracoes";
+import TelaEsqueceuSenha from "./src/screens/Esqueceu senha/TelaEsqueceuSenha";
 
 const Stack = createNativeStackNavigator();
 

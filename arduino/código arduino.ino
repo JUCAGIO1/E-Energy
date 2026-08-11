@@ -55,6 +55,7 @@ void enviarDadosBackend(float corrente, float potencia) {
     HTTPClient http;
     http.begin(backendUrl);
     http.addHeader("Content-Type", "application/json");
+    http.addHeader("X-ESP32-Secret", "eenergy_esp32_secret_2026");
 
     // Monta o JSON
     String jsonPayload = "{";

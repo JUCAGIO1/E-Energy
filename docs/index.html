@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Energy | Gestão Inteligente de Energia Elétrica (IoT)</title>
+  <meta name="description" content="E-Energy - Plataforma IoT de monitoramento elétrico residencial em tempo real com ESP32, inteligência financeira e segurança industrial.">
+  
+  <!-- Tipografia Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navbar Header -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#" class="brand-logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">E-ENERGY</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#recursos">Recursos</a>
+        <a href="#calculadora">Calculadora SP</a>
+        <a href="#seguranca">Segurança</a>
+        <a href="#tcc">Sobre o TCC</a>
+      </nav>
+      <a href="#calculadora" class="btn-primary-small">Simular Custo</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-container">
+      <div class="badge-pill">⚡ Tecnologia IoT & Gestão Energética Residencial</div>
+      <h1 class="hero-title">Monitore o Consumo Elétrico da sua Casa em <span class="highlight-gold">Tempo Real</span></h1>
+      <p class="hero-subtitle">
+        Saber para onde vai a energia da sua casa não é mais mistério. O E-Energy conecta sensores na caixa de disjuntores ao seu celular, entregando previsões financeiras e economia real na conta de luz.
+      </p>
+      <div class="hero-actions">
+        <a href="#calculadora" class="btn-hero-primary">⚡ Simular Economia de Energia</a>
+        <a href="#recursos" class="btn-hero-secondary">🔍 Conhecer a Solução</a>
+      </div>
+
+      <!-- Card estatístico em destaque -->
+      <div class="hero-stats">
+        <div class="stat-card">
+          <div class="stat-value">95%+</div>
+          <div class="stat-label">Cobertura Tarifária de SP</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">RMS</div>
+          <div class="stat-label">Precisão Senoidal ESP32</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">AES-128</div>
+          <div class="stat-label">Criptografia de Hardware</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recursos Principais -->
+  <section id="recursos" class="features-section">
+    <div class="section-header">
+      <h2 class="section-title">Engenharia e Inovação a Serviço da Eficiência</h2>
+      <p class="section-subtitle">Tudo o que você precisa para controlar disjuntores, tomadas e economizar na fatura de energia.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🔌</div>
+        <h3>Monitoramento no Quadro Elétrico</h3>
+        <p>O hardware ESP32 instalado no trilho DIN da caixa de disjuntores mede a corrente RMS em amperes e a potência ativa em watts de cada circuito elétrico.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Aplicativo Mobile Interativo</h3>
+        <p>Dashboard dark intuitivo construído em React Native/Expo, exibindo gráficos de consumo em tempo real, relés de corte e notificações push de sobrecarga.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📄</div>
+        <h3>Relatórios Auditáveis em PDF</h3>
+        <p>Geração instantânea de laudos de eficiência energética com tabelas de kWh, taxas da ANEEL e selo de auditoria de segurança da instalação.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🌐</div>
+        <h3>Média Tarifária ANEEL / SP</h3>
+        <p>Integração direta com as tarifas médias de São Paulo (ENEL SP, CPFL Paulista, EDP SP) calculando exatamente os valores em Reais (R$).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calculadora Interativa ao Vivo -->
+  <section id="calculadora" class="calc-section">
+    <div class="calc-container">
+      <div class="calc-header">
+        <h2>🧮 Simule o Custo de Qualquer Aparelho em SP</h2>
+        <p>Descubra quanto um eletrodoméstico custa na sua conta de luz usando a tarifa média de São Paulo (R$ 0,85/kWh com impostos).</p>
+      </div>
+
+      <div class="calc-box">
+        <div class="calc-inputs">
+          <div class="input-group">
+            <label for="potencia">Potência do Aparelho (Watts):</label>
+            <input type="number" id="potencia" value="1500" placeholder="Ex: 1500W (Ar Condicionado/Secador)">
+          </div>
+
+          <div class="input-group">
+            <label for="horas">Horas de Uso por Dia:</label>
+            <input type="number" id="horas" value="4" placeholder="Ex: 4 horas">
+          </div>
+
+          <div class="input-group">
+            <label for="dias">Dias por Mês:</label>
+            <input type="number" id="dias" value="30" placeholder="Ex: 30 dias">
+          </div>
+        </div>
+
+        <div class="calc-results">
+          <div class="result-card">
+            <span class="result-title">Consumo Mensal:</span>
+            <span class="result-value" id="resKwh">180.0 kWh</span>
+          </div>
+
+          <div class="result-card result-card-gold">
+            <span class="result-title">Custo Estimado em SP:</span>
+            <span class="result-value-gold" id="resValor">R$ 153,00 / mês</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Camada de Segurança -->
+  <section id="seguranca" class="security-section">
+    <div class="section-header">
+      <h2 class="section-title">🛡️ Arquitetura de Segurança Zero Trust</h2>
+      <p class="section-subtitle">Desenvolvido com padrões industriais contra ciberataques, vazamentos e adulteração de dados.</p>
+    </div>
+
+    <div class="security-cards">
+      <div class="sec-card">
+        <h4>🔒 HMAC-SHA256 & eFuse</h4>
+        <p>Chave secreta de 256 bits gravada no silício do microcontrolador. Cada medição enviada contém assinatura digital não forjável.</p>
+      </div>
+
+      <div class="sec-card">
+        <h4>🚨 Anti-DDoS & RateLimiter</h4>
+        <p>Sistema de limitação de requisições por IP no backend Express, bloqueando robôs e ataques de negação de serviço ao vivo.</p>
+      </div>
+
+      <div class="sec-card">
+        <h4>💉 Proteção Anti-Injeção NoSQL</h4>
+        <p>Filtros de sanitização de pacotes removendo operadores maliciosos para garantir total integridade no banco de dados MongoDB Atlas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção do TCC & Sobre o Projeto -->
+  <section id="tcc" class="tcc-section">
+    <div class="tcc-container">
+      <h2>🎓 Projeto de Conclusão de Curso (TCC)</h2>
+      <p>
+        O <strong>E-Energy</strong> nasceu como um projeto de conclusão de curso com a visão de revolucionar a eficiência energética em residências e pequenos comércios. Combinando Engenharia de Hardware, Internet das Coisas (IoT), Desenvolvimento Mobile e Segurança da Informação, o projeto está preparado para evolução em Startup de tecnologia.
+      </p>
+      <div class="tcc-badge">Engenharia / Tecnologia da Informação</div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <span>⚡ E-ENERGY</span>
+        <p>Sistema de Monitoramento Elétrico Residencial</p>
+      </div>
+      <div class="footer-copy">
+        E-Energy &copy; 2026 - Todos os direitos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

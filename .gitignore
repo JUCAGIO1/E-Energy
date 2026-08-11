@@ -1,0 +1,42 @@
+# ==========================================
+# 🛡️ E-Energy: Root GitIgnore (Segurança & Limpeza)
+# ==========================================
+
+# 🔒 Variáveis de Ambiente e Credenciais (NUNCA SUBIR)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+*.pem
+*.key
+*.cert
+*.crt
+
+# 📦 Dependências do Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json.bak
+
+# 📱 Expo / React Native
+.expo/
+dist/
+web-build/
+*.apk
+*.aab
+*.ipa
+
+# 🛠️ Sistema Operacional e Editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ⚡ Arduino / ESP32 Secret Configs
+arduino/config.h

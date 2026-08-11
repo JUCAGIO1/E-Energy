@@ -1,0 +1,11 @@
+// 🔒 Arquivo Modelo de Credenciais do ESP32
+// Renomeie este arquivo para "config.h" no mesmo diretório para gravar suas senhas de forma segura!
+
+#ifndef CONFIG_H
+#define CONFIG_H
+
+const char* WIFI_SSID = "NOME_DA_SUA_REDE_WIFI";
+const char* WIFI_PASSWORD = "SUA_SENHA_DO_WIFI";
+const char* BACKEND_URL = "https://e-energy-api.onrender.com/api/leituras";
+
+#endif

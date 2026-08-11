@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, View, Text, StyleSheet } from "react-native";
+import { SafeAreaView, View, Text, StyleSheet, ScrollView } from "react-native";
 import CustomButton from "../../components/CustomButton";
 import { Colors } from "../../constants/colors";
 import { getStoredUser, logoutUser } from "../../services/api";
+import { gerarRelatorioPDF } from "../../services/pdfService";
+import { dispararAlertaConsumo, solicitarPermissaoNotificacoes } from "../../services/notificationService";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function TelaPerfil({ navigation }) {
-  const [usuario, setUsuario] = useState({ nome: 'Carregando...', email: '...' });
+  const [usuario, setUsuario] = useState({ nome: 'Giovanni Amadio', email: 'giovanni@email.com' });
 
   useEffect(() => {
     const carregarUsuario = async () => {
+      solicitarPermissaoNotificacoes();
       const u = await getStoredUser();
       if (u) {
         setUsuario(u);
-      } else {
-        setUsuario({ nome: 'João da Silva', email: 'joao@email.com' });
       }
     };
     carregarUsuario();
@@ -24,54 +26,89 @@ export default function TelaPerfil({ navigation }) {
     navigation.replace("Login");
   };
 
+  const handleGerarPDF = () => {
+    gerarRelatorioPDF(usuario);
+  };
+
+  const handleTestarAlerta = () => {
+    dispararAlertaConsumo(
+      "🚨 ALERTA E-ENERGY: PICO DE CORRENTE",
+      "Detector de sobrecarga acionado! A corrente no Chuveiro ultrapassou 16.5A."
+    );
+  };
+
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
-        <Text style={styles.title}>👤 Perfil do Usuário</Text>
+    <View style={styles.outerContainer}>
+      <SafeAreaView style={styles.safeArea}>
+        <ScrollView contentContainerStyle={styles.container}>
+          <Text style={styles.title}>👤 Perfil do Usuário</Text>
 
-        <View style={styles.infoBox}>
-          <Text style={styles.label}>Nome:</Text>
-          <Text style={styles.value}>{usuario.nome}</Text>
-        </View>
+          <View style={styles.infoBox}>
+            <Text style={styles.label}>Nome:</Text>
+            <Text style={styles.value}>{usuario.nome}</Text>
+          </View>
 
-        <View style={styles.infoBox}>
-          <Text style={styles.label}>E-mail:</Text>
-          <Text style={styles.value}>{usuario.email}</Text>
-        </View>
+          <View style={styles.infoBox}>
+            <Text style={styles.label}>E-mail:</Text>
+            <Text style={styles.value}>{usuario.email}</Text>
+          </View>
 
-        <CustomButton
-          title="Configurações"
-          onPress={() => navigation.navigate("Configuracoes")}
-          style={{ marginTop: 20 }}
-        />
+          {/* Sugestão 2: Exportação em PDF */}
+          <CustomButton
+            title="📄 Exportar Relatório em PDF"
+            icon={<Ionicons name="document-text" size={20} color={Colors.textDark} style={{ marginRight: 8 }} />}
+            onPress={handleGerarPDF}
+            style={{ marginTop: 15 }}
+          />
 
-        <CustomButton
-          title="Sair da Conta"
-          variant="outline"
-          onPress={handleLogout}
-          style={{ marginTop: 10 }}
-        />
-      </View>
-    </SafeAreaView>
+          {/* Sugestão 3: Alerta Push de Consumo Excessivo */}
+          <CustomButton
+            title="🚨 Testar Alerta de Sobrecarga"
+            variant="secondary"
+            icon={<Ionicons name="warning" size={20} color={Colors.primary} style={{ marginRight: 8 }} />}
+            onPress={handleTestarAlerta}
+            style={{ marginTop: 8 }}
+          />
+
+          <CustomButton
+            title="⚙️ Configurações"
+            variant="secondary"
+            onPress={() => navigation.navigate("Configuracoes")}
+            style={{ marginTop: 8 }}
+          />
+
+          <CustomButton
+            title="Sair da Conta"
+            variant="outline"
+            onPress={handleLogout}
+            style={{ marginTop: 15, marginBottom: 20 }}
+          />
+        </ScrollView>
+      </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  outerContainer: {
+    flex: 1,
+    backgroundColor: Colors.background,
+  },
   safeArea: {
     flex: 1,
     backgroundColor: Colors.background,
   },
   container: {
-    flex: 1,
+    flexGrow: 1,
     padding: 25,
-    justifyContent: "center",
+    justify.content: "center",
   },
   title: {
     fontSize: 26,
     fontWeight: "bold",
     color: Colors.primary,
     textAlign: "center",
-    marginBottom: 30,
+    marginBottom: 25,
   },
   infoBox: {
     backgroundColor: Colors.surface,

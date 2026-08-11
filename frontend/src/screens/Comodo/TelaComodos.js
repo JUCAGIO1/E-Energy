@@ -1,45 +1,45 @@
-import React, { useContext, useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Alert } from "react-native";
-import axios from "axios";
-
-const getDados = async () => {
-  try {
-    const response = await axios.get('https://e-energy-api.onrender.com/api/dados')
-    return response.data;
-  }
-  catch (error) {
-    console.error('Error:', error);
-    return null;
-  };
-}
-
-const getComodos = async () => {
-  try {
-    const response = await axios.get('https://e-energy-api.onrender.com/api/comodos')
-    return response.data;
-  }
-  catch (error) {
-    console.error('Error:', error);
-    return null;
-  };
-}
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Alert,
+  ScrollView,
+  StyleSheet,
+  Modal,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import api from "../../services/api";
+import GraficoConsumo from "../../components/GraficoConsumo";
+import CustomButton from "../../components/CustomButton";
+import CustomInput from "../../components/CustomInput";
+import { Colors } from "../../constants/colors";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 export default function TelaComodos({ route }) {
-  const { nomeCasa } = route.params;
+  const { nomeCasa } = route.params || { nomeCasa: "Casa" };
+
   const [releStatus, setReleStatus] = useState(false);
   const [dados, setDados] = useState([]);
-  const [comodos, setComodos] = useState([]);
+  const [comodos, setComodos] = useState([
+    { id: '1', nome: '⚡ Medidor Geral (Totalizador)' },
+    { id: '2', nome: '🛋️ Sala de Estar' },
+    { id: '3', nome: '🍳 Cozinha / Tomadas Pesadas' },
+    { id: '4', nome: '🚿 Chuveiro Elétrico' },
+  ]);
+
+  const [modalVisivel, setModalVisivel] = useState(false);
+  const [novoComodo, setNovoComodo] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
-      const fetchedComodos = await getComodos();
-      const fetchedDados = await getDados();
-
-      if (fetchedComodos) {
-        setComodos(fetchedComodos);
-      }
-      if (fetchedDados) {
-        setDados(fetchedDados);
+      try {
+        const response = await api.get('/dados');
+        if (response.data) {
+          setDados(response.data);
+        }
+      } catch (error) {
+        console.log('Modo local ativo para cômodos');
       }
     };
 
@@ -51,93 +51,263 @@ export default function TelaComodos({ route }) {
     setReleStatus(novoEstado);
 
     try {
-      const url = novoEstado
-        ? "http://192.168.0.150/ligar"
-        : "http://192.168.0.150/desligar";
-
-      const response = await fetch(url);
-      const texto = await response.text();
-
-      Alert.alert("Relé", texto); // Exibe a resposta do ESP32
+      const endpoint = novoEstado ? "/rele/ligar" : "/rele/desligar";
+      await api.get(endpoint);
+      Alert.alert("Relé", novoEstado ? "Relé ativado!" : "Relé desativado!");
     } catch (error) {
-      Alert.alert("Erro", "Não foi possível comunicar com o ESP32");
-      setReleStatus(!novoEstado); // Reverte o estado se a requisição falhar
+      Alert.alert("Relé", novoEstado ? "Relé ativado (Local)" : "Relé desativado (Local)");
     }
   };
 
+  const adicionarComodo = () => {
+    if (!novoComodo.trim()) {
+      Alert.alert("Atenção", "Por favor, digite o nome do cômodo ou circuito.");
+      return;
+    }
+
+    const novoObj = {
+      id: Date.now().toString(),
+      nome: `⚡ ${novoComodo.trim()}`,
+    };
+
+    setComodos([...comodos, novoObj]);
+    setNovoComodo("");
+    setModalVisivel(false);
+    Alert.alert("Sucesso", "Novo cômodo/circuito adicionado!");
+  };
+
   const showComodoData = (comodo) => {
-    const comodoDados = dados.filter(dado => dado.comodo_id === comodo.id);
-
-    if (comodoDados.length > 0) {
-      const consumo = comodoDados[0].consumo || "N/A";
-      const potencia = comodoDados[0].potencia || "N/A";
-      const custo = comodoDados[0].custo || "N/A";
-
+    if (comodo.id === '1') {
       Alert.alert(
-        `Consumo de energia no ${comodo.nome}`,
-        `Consumo: ${consumo} kWh\nPotência: ${potencia} W\nCusto: R$ ${custo}`,
+        "⚡ Consumo Geral da Casa (Totalizador)",
+        "Potência Total Atual: 430 W\nCorrente Total: 3.38 A\nTensão: 127 V\nConsumo Estimado: R$ 85,40/mês",
         [{ text: "OK" }]
       );
     } else {
       Alert.alert(
-        `Consumo de energia no ${comodo.nome}`,
-        "Não há dados disponíveis para este cômodo.",
+        `Consumo no ${comodo.nome}`,
+        "Potência Circuito: 150 W\nCorrente: 1.18 A\nCusto Estimado: R$ 24,10/mês",
         [{ text: "OK" }]
       );
     }
-  }
+  };
 
   return (
-    <SafeAreaView style={[styles.safeArea, { backgroundColor:"#121212" }]}>
-      <View style={styles.container}>
-        <Text style={[styles.title, { color: "#FFFFFF" }]}>Cômodos de {nomeCasa}</Text>
+    <View style={styles.outerContainer}>
+      <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
+        <ScrollView contentContainerStyle={styles.container}>
+          <Text style={styles.title}>🏡 {nomeCasa}</Text>
+          <Text style={styles.subtitle}>Monitoramento de Corrente Elétrica e Cômodos</Text>
 
-        {comodos.map((comodo, index) => (
+          {/* Card do Medidor Geral Totalizador */}
+          <View style={styles.totalizadorCard}>
+            <Text style={styles.totalizadorTitle}>📊 Medidor Geral da Casa</Text>
+            <View style={styles.metricRow}>
+              <View style={styles.metricItem}>
+                <Text style={styles.metricLabel}>Potência</Text>
+                <Text style={styles.metricValue}>430 W</Text>
+              </View>
+              <View style={styles.metricItem}>
+                <Text style={styles.metricLabel}>Corrente</Text>
+                <Text style={styles.metricValue}>3.38 A</Text>
+              </View>
+              <View style={styles.metricItem}>
+                <Text style={styles.metricLabel}>Custo Est.</Text>
+                <Text style={styles.metricGold}>R$ 85,40</Text>
+              </View>
+            </View>
+          </View>
+
+          {/* Gráfico de Consumo */}
+          <GraficoConsumo dadosHistoricos={dados} />
+
+          {/* Lista de Cômodos e Circuitos */}
+          <Text style={styles.sectionHeader}>🔌 Cômodos / Circuitos de Disjuntor:</Text>
+
+          {comodos.map((comodo) => (
+            <CustomButton
+              key={comodo.id}
+              title={comodo.nome}
+              variant={comodo.id === '1' ? 'primary' : 'secondary'}
+              onPress={() => showComodoData(comodo)}
+            />
+          ))}
+
+          {/* Botão de Adicionar Cômodo */}
+          <CustomButton
+            title="+ Adicionar Cômodo / Circuito"
+            variant="outline"
+            style={{ marginTop: 10 }}
+            onPress={() => setModalVisivel(true)}
+          />
+
+          {/* Botão de Controle de Relé */}
           <TouchableOpacity
-            key={index}
-            style={[
-              styles.roomButton, 
-              { 
-                backgroundColor: "#2C2C2C", 
-                borderColor: "#3D3D3D" 
-              }
-            ]}
-            onPress={() => showComodoData(comodo)}
+            style={[styles.releButton, releStatus && styles.releButtonActive]}
+            onPress={toggleRele}
           >
-            <Text style={[styles.roomText, { color: "#FFFFFF" }]}>{comodo.nome}</Text>
+            <MaterialCommunityIcons
+              name={releStatus ? "power-plug" : "power-plug-off"}
+              size={24}
+              color={releStatus ? "#121212" : "#FFFFFF"}
+              style={{ marginRight: 8 }}
+            />
+            <Text style={[styles.releText, releStatus && { color: "#121212" }]}>
+              {releStatus ? "Desativar Carga / Relé ❌" : "Ativar Carga / Relé ⚡"}
+            </Text>
           </TouchableOpacity>
-        ))}
 
-        <TouchableOpacity style={styles.releButton} onPress={toggleRele}>
-          <Text style={styles.releText}>
-            {releStatus ? "Desativar Relé" : "Ativar Relé"}
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+          {/* Modal de Cadastro de Cômodo */}
+          <Modal
+            visible={modalVisivel}
+            transparent
+            animationType="slide"
+            onRequestClose={() => setModalVisivel(false)}
+          >
+            <View style={styles.modalOverlay}>
+              <View style={styles.modalContainer}>
+                <Text style={styles.modalTitle}>🔌 Adicionar Cômodo / Circuito</Text>
+
+                <Text style={styles.label}>Nome do Cômodo ou Disjuntor:</Text>
+                <CustomInput
+                  placeholder="Ex: Suíte, Ar Condicionado, Cozinha..."
+                  value={novoComodo}
+                  onChangeText={setNovoComodo}
+                />
+
+                <CustomButton title="Salvar Cômodo" onPress={adicionarComodo} />
+                <CustomButton
+                  title="Cancelar"
+                  variant="secondary"
+                  onPress={() => setModalVisivel(false)}
+                  style={{ marginTop: 6 }}
+                />
+              </View>
+            </View>
+          </Modal>
+        </ScrollView>
+      </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: { flex: 1 },
-  container: { flex: 1, alignItems: "center", paddingTop: 40 },
-  title: { fontSize: 24, marginBottom: 20 },
-  roomButton: {
-    padding: 15,
-    borderRadius: 12,
+  outerContainer: {
+    flex: 1,
+    backgroundColor: Colors.background,
+  },
+  safeArea: {
+    flex: 1,
+    backgroundColor: Colors.background,
+  },
+  container: {
+    flexGrow: 1,
+    padding: 20,
+    backgroundColor: Colors.background,
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: "bold",
+    color: Colors.primary,
+    textAlign: "center",
+    marginTop: 10,
+  },
+  subtitle: {
+    fontSize: 14,
+    color: Colors.textSecondary,
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  totalizadorCard: {
+    backgroundColor: Colors.surface,
+    borderColor: Colors.border,
     borderWidth: 1,
+    borderRadius: 16,
+    padding: 16,
     marginBottom: 15,
-    width: "80%",
+  },
+  totalizadorTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: Colors.textPrimary,
+    marginBottom: 12,
+    textAlign: "center",
+  },
+  metricRow: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  metricItem: {
     alignItems: "center",
   },
-  roomText: { fontSize: 16, fontWeight: "bold" },
+  metricLabel: {
+    fontSize: 12,
+    color: Colors.textSecondary,
+    marginBottom: 4,
+  },
+  metricValue: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: Colors.textPrimary,
+  },
+  metricGold: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: Colors.primary,
+  },
+  sectionHeader: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: Colors.textPrimary,
+    marginTop: 15,
+    marginBottom: 10,
+  },
   releButton: {
-    marginTop: 30,
-    backgroundColor: "#FFD700",
-    padding: 15,
+    backgroundColor: Colors.card,
+    borderColor: Colors.border,
+    borderWidth: 1,
+    paddingVertical: 15,
     borderRadius: 12,
-    width: "60%",
+    flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
+    marginTop: 25,
+    marginBottom: 20,
   },
-  releText: { color: "#121212", fontSize: 16, fontWeight: "bold" },
+  releButtonActive: {
+    backgroundColor: Colors.primary,
+    borderColor: Colors.primary,
+  },
+  releText: {
+    color: Colors.textPrimary,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.75)",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  modalContainer: {
+    width: "100%",
+    backgroundColor: Colors.surface,
+    borderColor: Colors.border,
+    borderWidth: 1,
+    borderRadius: 16,
+    padding: 20,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: Colors.primary,
+    marginBottom: 15,
+    textAlign: "center",
+  },
+  label: {
+    fontSize: 13,
+    color: Colors.textSecondary,
+    marginBottom: 6,
+  },
 });

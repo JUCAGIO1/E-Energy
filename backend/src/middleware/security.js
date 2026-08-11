@@ -25,24 +25,30 @@ const limiterAutenticacao = rateLimit({
 
 // Middleware de Validação de Token de Hardware para o ESP32
 const validarSecretESP32 = (req, res, next) => {
-  const esp32Secret = req.headers['x-esp32-secret'];
-  const secretEsperada = process.env.ESP32_SECRET || 'eenergy_esp32_secret_2026';
-
-  // Se for GET (consulta do app), permite passar
+  // Se for GET (consulta do app), permite passar normalmente
   if (req.method === 'GET') {
     return next();
   }
 
-  // Se for POST de leitura sem a chave do ESP32 e sem token de usuário
-  if (req.path === '/leituras' && req.method === 'POST') {
-    if (esp32Secret !== secretEsperada) {
-      return res.status(403).json({
-        success: false,
-        message: 'Acesso negado: Requisição de hardware não autorizada.',
-      });
-    }
+  const esp32Secret = req.headers['x-esp32-secret'];
+  const secretEsperada = process.env.ESP32_SECRET || 'eenergy_esp32_secret_2026';
+
+  // Se for POST sem o cabeçalho secreto do ESP32, bloqueia
+  if (esp32Secret !== secretEsperada) {
+    return res.status(403).json({
+      success: false,
+      message: 'Acesso negado: Requisição de hardware não autorizada.',
+    });
   }
 
+  next();
+};
+
+// Sanitizador compatível com Express v5
+const mongoSanitizeExpress5 = (req, res, next) => {
+  if (req.body && typeof req.body === 'object') {
+    mongoSanitize.sanitize(req.body, { replaceWith: '_' });
+  }
   next();
 };
 
@@ -50,5 +56,5 @@ module.exports = {
   limiterGeral,
   limiterAutenticacao,
   validarSecretESP32,
-  mongoSanitize: mongoSanitize(),
+  mongoSanitize: mongoSanitizeExpress5,
 };

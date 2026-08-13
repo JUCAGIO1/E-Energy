@@ -5,13 +5,11 @@ import {
   StyleSheet,
   SafeAreaView,
   ScrollView,
-  TouchableOpacity,
 } from 'react-native';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import { Colors } from '../../constants/colors';
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function TelaDicasEconomia({ navigation }) {
   const [potenciaW, setPotenciaW] = useState('1500');
@@ -22,31 +20,31 @@ export default function TelaDicasEconomia({ navigation }) {
   const dicas = [
     {
       id: 1,
-      titulo: '🚿 Chuveiro Elétrico',
-      descricao: 'Reduza o tempo do banho para 8 minutos e use no modo "Verão".',
+      titulo: 'Chuveiro Elétrico',
+      descricao: 'Reduza o tempo do banho para 8 minutos e utilize a posição de temperatura mais econômica.',
       economia: 'Economia estimada: até R$ 45,00/mês',
-      icone: 'shower',
+      iconName: 'water-outline',
     },
     {
       id: 2,
-      titulo: '❄️ Ar Condicionado',
-      descricao: 'Mantenha a temperatura em 23°C ou 24°C e limpe os filtros mensalmente.',
+      titulo: 'Ar Condicionado',
+      descricao: 'Mantenha a temperatura em 23°C ou 24°C e mantenha a manutenção e limpeza dos filtros em dia.',
       economia: 'Economia estimada: 20% a 30% na conta',
-      icone: 'snowflake',
+      iconName: 'snow-outline',
     },
     {
       id: 3,
-      titulo: '🧊 Geladeira',
-      descricao: 'Evite deixar a porta aberta e não guarde alimentos quentes.',
+      titulo: 'Refrigeração e Geladeira',
+      descricao: 'Evite deixar a porta aberta por longos períodos e verifique a vedação da borracha.',
       economia: 'Economia estimada: cerca de R$ 15,00/mês',
-      icone: 'box',
+      iconName: 'cube-outline',
     },
     {
       id: 4,
-      titulo: '💡 Iluminação LED',
-      descricao: 'Substitua lâmpadas incandescentes/fluorescentes por LED.',
+      titulo: 'Iluminação LED',
+      descricao: 'Substitua lâmpadas antigas por lâmpadas de tecnologia LED de alta eficiência.',
       economia: 'Economia estimada: até 80% no consumo de luz',
-      icone: 'lightbulb',
+      iconName: 'bulb-outline',
     },
   ];
 
@@ -68,14 +66,17 @@ export default function TelaDicasEconomia({ navigation }) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>🌱 Dicas & Economia</Text>
+        <Text style={styles.title}>Dicas & Economia</Text>
         <Text style={styles.subtitle}>
           Aprenda a reduzir o consumo elétrico e calcule os custos dos aparelhos.
         </Text>
 
         {/* Seção: Calculadora de Aparelhos */}
         <View style={styles.cardCalculadora}>
-          <Text style={styles.cardTitle}>🧮 Simular Custo de um Aparelho</Text>
+          <View style={styles.cardHeaderRow}>
+            <Ionicons name="calculator-outline" size={20} color={Colors.primary} style={{ marginRight: 8 }} />
+            <Text style={styles.cardTitle}>Simular Custo de um Aparelho</Text>
+          </View>
 
           <Text style={styles.label}>Potência do aparelho (Watts):</Text>
           <CustomInput
@@ -108,10 +109,15 @@ export default function TelaDicasEconomia({ navigation }) {
         </View>
 
         {/* Seção: Lista de Dicas */}
-        <Text style={styles.sectionHeader}>💡 Dicas Práticas de Consumo</Text>
+        <View style={styles.sectionHeaderRow}>
+          <Ionicons name="bulb-outline" size={20} color={Colors.primary} style={{ marginRight: 8 }} />
+          <Text style={styles.sectionHeader}>Dicas Práticas de Consumo</Text>
+        </View>
+
         {dicas.map((dica) => (
           <View key={dica.id} style={styles.dicaCard}>
             <View style={styles.dicaHeader}>
+              <Ionicons name={dica.iconName} size={20} color={Colors.primary} style={{ marginRight: 8 }} />
               <Text style={styles.dicaTitulo}>{dica.titulo}</Text>
             </View>
             <Text style={styles.dicaDescricao}>{dica.descricao}</Text>
@@ -159,11 +165,15 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 25,
   },
+  cardHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
   cardTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     color: Colors.textPrimary,
-    marginBottom: 15,
   },
   label: {
     fontSize: 13,
@@ -192,11 +202,15 @@ const styles = StyleSheet.create({
     color: Colors.primary,
     fontSize: 17,
   },
+  sectionHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
   sectionHeader: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     color: Colors.textPrimary,
-    marginBottom: 15,
   },
   dicaCard: {
     backgroundColor: Colors.card,

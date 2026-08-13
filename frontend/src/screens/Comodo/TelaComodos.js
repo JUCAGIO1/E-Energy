@@ -15,6 +15,7 @@ import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
 import { Colors } from "../../constants/colors";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import Entypo from "@expo/vector-icons/Entypo";
 
 export default function TelaComodos({ route, navigation }) {
@@ -23,10 +24,10 @@ export default function TelaComodos({ route, navigation }) {
   const [releStatus, setReleStatus] = useState(false);
   const [dados, setDados] = useState([]);
   const [comodos, setComodos] = useState([
-    { id: '1', nome: '⚡ Medidor Geral (Totalizador)' },
-    { id: '2', nome: '🛋️ Sala de Estar' },
-    { id: '3', nome: '🍳 Cozinha / Tomadas Pesadas' },
-    { id: '4', nome: '🚿 Chuveiro Elétrico' },
+    { id: '1', nome: 'Medidor Geral (Totalizador)', icon: 'flash' },
+    { id: '2', nome: 'Sala de Estar', icon: 'tv-outline' },
+    { id: '3', nome: 'Cozinha / Tomadas Pesadas', icon: 'restaurant-outline' },
+    { id: '4', nome: 'Chuveiro Elétrico', icon: 'water-outline' },
   ]);
 
   const [modalVisivel, setModalVisivel] = useState(false);
@@ -54,9 +55,9 @@ export default function TelaComodos({ route, navigation }) {
     try {
       const endpoint = novoEstado ? "/rele/ligar" : "/rele/desligar";
       await api.get(endpoint);
-      Alert.alert("Relé", novoEstado ? "Relé ativado!" : "Relé desativado!");
+      Alert.alert("Relé", novoEstado ? "Relé ativado com sucesso." : "Relé desativado com sucesso.");
     } catch (error) {
-      Alert.alert("Relé", novoEstado ? "Relé ativado (Local)" : "Relé desativado (Local)");
+      Alert.alert("Relé", novoEstado ? "Relé ativado (Modo Local)" : "Relé desativado (Modo Local)");
     }
   };
 
@@ -68,19 +69,20 @@ export default function TelaComodos({ route, navigation }) {
 
     const novoObj = {
       id: Date.now().toString(),
-      nome: `⚡ ${novoComodo.trim()}`,
+      nome: novoComodo.trim(),
+      icon: 'hardware-chip-outline',
     };
 
     setComodos([...comodos, novoObj]);
     setNovoComodo("");
     setModalVisivel(false);
-    Alert.alert("Sucesso", "Novo cômodo/circuito adicionado!");
+    Alert.alert("Sucesso", "Novo cômodo ou circuito cadastrado.");
   };
 
   const showComodoData = (comodo) => {
     if (comodo.id === '1') {
       Alert.alert(
-        "⚡ Consumo Geral da Casa (Totalizador)",
+        "Consumo Geral da Casa (Totalizador)",
         "Potência Total Atual: 430 W\nCorrente Total: 3.38 A\nTensão: 127 V\nConsumo Estimado: R$ 85,40/mês",
         [{ text: "OK" }]
       );
@@ -103,18 +105,21 @@ export default function TelaComodos({ route, navigation }) {
     <View style={styles.outerContainer}>
       <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
         <ScrollView contentContainerStyle={styles.container}>
-          {/* Botão Superior de Voltar / Trocar de Casa */}
+          {/* Botão Superior de Voltar */}
           <TouchableOpacity style={styles.trocarCasaHeader} onPress={handleTrocarCasa}>
-            <Entypo name="chevron-left" size={20} color={Colors.primary} />
+            <Entypo name="chevron-left" size={18} color={Colors.primary} />
             <Text style={styles.trocarCasaHeaderText}>Sair / Trocar de Casa</Text>
           </TouchableOpacity>
 
-          <Text style={styles.title}>🏡 {nomeCasa}</Text>
+          <Text style={styles.title}>{nomeCasa}</Text>
           <Text style={styles.subtitle}>Monitoramento de Corrente Elétrica e Cômodos</Text>
 
           {/* Card do Medidor Geral Totalizador */}
           <View style={styles.totalizadorCard}>
-            <Text style={styles.totalizadorTitle}>📊 Medidor Geral da Casa</Text>
+            <View style={styles.totalizadorHeaderRow}>
+              <Ionicons name="analytics-outline" size={20} color={Colors.primary} style={{ marginRight: 8 }} />
+              <Text style={styles.totalizadorTitle}>Medidor Geral da Casa</Text>
+            </View>
             <View style={styles.metricRow}>
               <View style={styles.metricItem}>
                 <Text style={styles.metricLabel}>Potência</Text>
@@ -135,13 +140,14 @@ export default function TelaComodos({ route, navigation }) {
           <GraficoConsumo dadosHistoricos={dados} />
 
           {/* Lista de Cômodos e Circuitos */}
-          <Text style={styles.sectionHeader}>🔌 Cômodos / Circuitos de Disjuntor:</Text>
+          <Text style={styles.sectionHeader}>Cômodos / Circuitos de Disjuntor:</Text>
 
           {comodos.map((comodo) => (
             <CustomButton
               key={comodo.id}
               title={comodo.nome}
               variant={comodo.id === '1' ? 'primary' : 'secondary'}
+              icon={<Ionicons name={comodo.icon || 'flash-outline'} size={18} color={comodo.id === '1' ? Colors.textDark : Colors.primary} style={{ marginRight: 10 }} />}
               onPress={() => showComodoData(comodo)}
             />
           ))}
@@ -161,19 +167,20 @@ export default function TelaComodos({ route, navigation }) {
           >
             <MaterialCommunityIcons
               name={releStatus ? "power-plug" : "power-plug-off"}
-              size={24}
+              size={22}
               color={releStatus ? "#121212" : "#FFFFFF"}
               style={{ marginRight: 8 }}
             />
             <Text style={[styles.releText, releStatus && { color: "#121212" }]}>
-              {releStatus ? "Desativar Carga / Relé ❌" : "Ativar Carga / Relé ⚡"}
+              {releStatus ? "Desativar Carga / Relé" : "Ativar Carga / Relé"}
             </Text>
           </TouchableOpacity>
 
           {/* Botão Inferior de Trocar de Casa */}
           <CustomButton
-            title="🏠 Sair da Casa (Voltar para Lista de Casas)"
+            title="Sair da Casa (Voltar para Lista de Casas)"
             variant="outline"
+            icon={<Ionicons name="home-outline" size={18} color={Colors.primary} style={{ marginRight: 8 }} />}
             style={{ marginTop: 5, marginBottom: 20 }}
             onPress={handleTrocarCasa}
           />
@@ -187,7 +194,7 @@ export default function TelaComodos({ route, navigation }) {
           >
             <View style={styles.modalOverlay}>
               <View style={styles.modalContainer}>
-                <Text style={styles.modalTitle}>🔌 Adicionar Cômodo / Circuito</Text>
+                <Text style={styles.modalTitle}>Adicionar Cômodo / Circuito</Text>
 
                 <Text style={styles.label}>Nome do Cômodo ou Disjuntor:</Text>
                 <CustomInput
@@ -265,12 +272,16 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 15,
   },
+  totalizadorHeaderRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 12,
+  },
   totalizadorTitle: {
     fontSize: 16,
     fontWeight: "bold",
     color: Colors.textPrimary,
-    marginBottom: 12,
-    textAlign: "center",
   },
   metricRow: {
     flexDirection: "row",
@@ -295,7 +306,7 @@ const styles = StyleSheet.create({
     color: Colors.primary,
   },
   sectionHeader: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "bold",
     color: Colors.textPrimary,
     marginTop: 15,

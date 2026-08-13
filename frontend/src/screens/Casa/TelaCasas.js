@@ -10,7 +10,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
-import Entypo from "@expo/vector-icons/Entypo";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors } from "../../constants/colors";
 
 export default function TelaCasas({ navigation }) {
@@ -43,7 +43,7 @@ export default function TelaCasas({ navigation }) {
     <View style={styles.outerContainer}>
       <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
         <ScrollView contentContainerStyle={styles.container}>
-          <Text style={styles.title}>🏠 Minhas Casas</Text>
+          <Text style={styles.title}>Minhas Casas</Text>
           <Text style={styles.subtitle}>Selecione uma casa para visualizar os cômodos e consumo</Text>
 
           {casas.map((casa) => (
@@ -51,7 +51,7 @@ export default function TelaCasas({ navigation }) {
               key={casa.id}
               title={casa.nome}
               variant="secondary"
-              icon={<Entypo name="home" size={22} color={Colors.primary} style={{ marginRight: 12 }} />}
+              icon={<Ionicons name="home-outline" size={20} color={Colors.primary} style={{ marginRight: 12 }} />}
               onPress={() => navigation.navigate("TelaComodos", { nomeCasa: casa.nome })}
             />
           ))}
@@ -73,7 +73,7 @@ export default function TelaCasas({ navigation }) {
           >
             <View style={styles.modalOverlay}>
               <View style={styles.modalContainer}>
-                <Text style={styles.modalTitle}>🏡 Cadastrar Nova Casa</Text>
+                <Text style={styles.modalTitle}>Cadastrar Nova Casa</Text>
                 
                 <Text style={styles.label}>Nome da Casa ou Propriedade:</Text>
                 <CustomInput
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.75)',
-    justifyContent: 'center',
+    justify.content: 'center',
     alignItems: 'center',
     padding: 20,
   },

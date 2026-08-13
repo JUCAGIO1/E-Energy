@@ -3,12 +3,13 @@ import { View, Text, StyleSheet, SafeAreaView, ScrollView, Switch, Alert, Toucha
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { Colors } from "../../constants/colors";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import axios from "axios";
 
 export default function TelaConfiguracoes({ navigation }) {
   const [tarifaKwh, setTarifaKwh] = useState("0.85");
   const [opcaoSelecionada, setOpcaoSelecionada] = useState("Média SP");
-  const [bandeiraAtual, setBandeiraAtual] = useState("🟢 Verde (R$ 0,00 extra)");
+  const [bandeiraAtual, setBandeiraAtual] = useState("Verde (R$ 0,00 extra)");
   const [limiteCorrenteA, setLimiteCorrenteA] = useState("15");
   const [ipServidor, setIpServidor] = useState("http://localhost:3000/api");
   const [notificacoesAtivas, setNotificacoesAtivas] = useState(true);
@@ -21,14 +22,12 @@ export default function TelaConfiguracoes({ navigation }) {
     setBuscandoApi(true);
 
     try {
-      // Tenta consultar a API de Dados Abertos da ANEEL (CKAN API)
       const res = await axios.get(
         'https://dadosabertos.aneel.gov.br/api/3/action/datastore_search?resource_id=f4ad9f38-324c-4903-9723-774f07a2c070&limit=5&q=SP',
         { timeout: 4000 }
       );
 
       if (res.data && res.data.success) {
-        // Sucesso na consulta ANEEL
         setBuscandoApi(false);
         let valorCalculado = "0.85";
 
@@ -40,7 +39,7 @@ export default function TelaConfiguracoes({ navigation }) {
         setTarifaKwh(valorCalculado);
         Alert.alert(
           "API ANEEL Conectada",
-          `• Seleção: ${opcao}\n• Tarifa Residencial Média de SP: R$ ${valorCalculado}/kWh\n• Bandeira ANEEL: 🟢 Verde`
+          `• Seleção: ${opcao}\n• Tarifa Residencial Média de SP: R$ ${valorCalculado}/kWh\n• Bandeira ANEEL: Verde`
         );
         return;
       }
@@ -71,12 +70,15 @@ export default function TelaConfiguracoes({ navigation }) {
     <View style={styles.outerContainer}>
       <SafeAreaView style={styles.safeArea}>
         <ScrollView contentContainerStyle={styles.container}>
-          <Text style={styles.title}>⚙️ Configurações</Text>
+          <Text style={styles.title}>Configurações</Text>
           <Text style={styles.subtitle}>Ajuste parâmetros da rede e tarifas do sistema</Text>
 
           {/* Bloco 1: Média do Estado de São Paulo */}
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>🌐 Tarifa de Energia (Estado de SP)</Text>
+            <View style={styles.cardHeaderRow}>
+              <Ionicons name="globe-outline" size={18} color={Colors.primary} style={{ marginRight: 8 }} />
+              <Text style={styles.cardTitle}>Tarifa de Energia (Estado de SP)</Text>
+            </View>
             <Text style={styles.label}>Selecione para aplicar a média de SP:</Text>
 
             <View style={styles.distribuidorasRow}>
@@ -121,7 +123,10 @@ export default function TelaConfiguracoes({ navigation }) {
 
           {/* Bloco 2: Limite de Segurança */}
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>🚨 Alertas e Limites de Carga</Text>
+            <View style={styles.cardHeaderRow}>
+              <Ionicons name="warning-outline" size={18} color={Colors.primary} style={{ marginRight: 8 }} />
+              <Text style={styles.cardTitle}>Alertas e Limites de Carga</Text>
+            </View>
             <Text style={styles.label}>Limite máximo de corrente (Amperes):</Text>
             <CustomInput
               placeholder="Ex: 15 (A)"
@@ -153,7 +158,10 @@ export default function TelaConfiguracoes({ navigation }) {
 
           {/* Bloco 3: Conexão Hardware / Backend */}
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>🌐 Conexão Backend / ESP32</Text>
+            <View style={styles.cardHeaderRow}>
+              <Ionicons name="hardware-chip-outline" size={18} color={Colors.primary} style={{ marginRight: 8 }} />
+              <Text style={styles.cardTitle}>Conexão Backend / ESP32</Text>
+            </View>
             <Text style={styles.label}>URL da API / Endereço IP do Servidor:</Text>
             <CustomInput
               placeholder="http://192.168.0.x:3000/api"
@@ -212,11 +220,15 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 18,
   },
+  cardHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
   cardTitle: {
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: "bold",
     color: Colors.textPrimary,
-    marginBottom: 12,
   },
   label: {
     fontSize: 13,

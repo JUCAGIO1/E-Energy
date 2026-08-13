@@ -19,7 +19,9 @@
   <header class="navbar">
     <div class="nav-container">
       <a href="#" class="brand-logo">
-        <span class="logo-icon">⚡</span>
+        <svg class="logo-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+        </svg>
         <span class="logo-text">E-ENERGY</span>
       </a>
       <nav class="nav-links">
@@ -35,14 +37,14 @@
   <!-- Hero Section -->
   <section class="hero-section">
     <div class="hero-container">
-      <div class="badge-pill">⚡ Tecnologia IoT & Gestão Energética Residencial</div>
+      <div class="badge-pill">Tecnologia IoT & Gestão Energética Residencial</div>
       <h1 class="hero-title">Monitore o Consumo Elétrico da sua Casa em <span class="highlight-gold">Tempo Real</span></h1>
       <p class="hero-subtitle">
         Saber para onde vai a energia da sua casa não é mais mistério. O E-Energy conecta sensores na caixa de disjuntores ao seu celular, entregando previsões financeiras e economia real na conta de luz.
       </p>
       <div class="hero-actions">
-        <a href="#calculadora" class="btn-hero-primary">⚡ Simular Economia de Energia</a>
-        <a href="#recursos" class="btn-hero-secondary">🔍 Conhecer a Solução</a>
+        <a href="#calculadora" class="btn-hero-primary">Simular Economia de Energia</a>
+        <a href="#recursos" class="btn-hero-secondary">Conhecer a Solução</a>
       </div>
 
       <!-- Card estatístico em destaque -->
@@ -72,25 +74,49 @@
 
     <div class="features-grid">
       <div class="feature-card">
-        <div class="feature-icon">🔌</div>
+        <div class="feature-svg-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+        </div>
         <h3>Monitoramento no Quadro Elétrico</h3>
         <p>O hardware ESP32 instalado no trilho DIN da caixa de disjuntores mede a corrente RMS em amperes e a potência ativa em watts de cada circuito elétrico.</p>
       </div>
 
       <div class="feature-card">
-        <div class="feature-icon">📱</div>
+        <div class="feature-svg-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+          </svg>
+        </div>
         <h3>Aplicativo Mobile Interativo</h3>
         <p>Dashboard dark intuitivo construído em React Native/Expo, exibindo gráficos de consumo em tempo real, relés de corte e notificações push de sobrecarga.</p>
       </div>
 
       <div class="feature-card">
-        <div class="feature-icon">📄</div>
+        <div class="feature-svg-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+        </div>
         <h3>Relatórios Auditáveis em PDF</h3>
         <p>Geração instantânea de laudos de eficiência energética com tabelas de kWh, taxas da ANEEL e selo de auditoria de segurança da instalação.</p>
       </div>
 
       <div class="feature-card">
-        <div class="feature-icon">🌐</div>
+        <div class="feature-svg-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+        </div>
         <h3>Média Tarifária ANEEL / SP</h3>
         <p>Integração direta com as tarifas médias de São Paulo (ENEL SP, CPFL Paulista, EDP SP) calculando exatamente os valores em Reais (R$).</p>
       </div>
@@ -101,7 +127,7 @@
   <section id="calculadora" class="calc-section">
     <div class="calc-container">
       <div class="calc-header">
-        <h2>🧮 Simule o Custo de Qualquer Aparelho em SP</h2>
+        <h2>Simule o Custo de Qualquer Aparelho em SP</h2>
         <p>Descubra quanto um eletrodoméstico custa na sua conta de luz usando a tarifa média de São Paulo (R$ 0,85/kWh com impostos).</p>
       </div>
 
@@ -141,23 +167,23 @@
   <!-- Camada de Segurança -->
   <section id="seguranca" class="security-section">
     <div class="section-header">
-      <h2 class="section-title">🛡️ Arquitetura de Segurança Zero Trust</h2>
+      <h2 class="section-title">Arquitetura de Segurança Zero Trust</h2>
       <p class="section-subtitle">Desenvolvido com padrões industriais contra ciberataques, vazamentos e adulteração de dados.</p>
     </div>
 
     <div class="security-cards">
       <div class="sec-card">
-        <h4>🔒 HMAC-SHA256 & eFuse</h4>
+        <h4>HMAC-SHA256 & eFuse</h4>
         <p>Chave secreta de 256 bits gravada no silício do microcontrolador. Cada medição enviada contém assinatura digital não forjável.</p>
       </div>
 
       <div class="sec-card">
-        <h4>🚨 Anti-DDoS & RateLimiter</h4>
+        <h4>Anti-DDoS & RateLimiter</h4>
         <p>Sistema de limitação de requisições por IP no backend Express, bloqueando robôs e ataques de negação de serviço ao vivo.</p>
       </div>
 
       <div class="sec-card">
-        <h4>💉 Proteção Anti-Injeção NoSQL</h4>
+        <h4>Proteção Anti-Injeção NoSQL</h4>
         <p>Filtros de sanitização de pacotes removendo operadores maliciosos para garantir total integridade no banco de dados MongoDB Atlas.</p>
       </div>
     </div>
@@ -166,7 +192,7 @@
   <!-- Seção do TCC & Sobre o Projeto -->
   <section id="tcc" class="tcc-section">
     <div class="tcc-container">
-      <h2>🎓 Projeto de Conclusão de Curso (TCC)</h2>
+      <h2>Projeto de Conclusão de Curso (TCC)</h2>
       <p>
         O <strong>E-Energy</strong> nasceu como um projeto de conclusão de curso com a visão de revolucionar a eficiência energética em residências e pequenos comércios. Combinando Engenharia de Hardware, Internet das Coisas (IoT), Desenvolvimento Mobile e Segurança da Informação, o projeto está preparado para evolução em Startup de tecnologia.
       </p>
@@ -178,7 +204,7 @@
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-brand">
-        <span>⚡ E-ENERGY</span>
+        <span>E-ENERGY</span>
         <p>Sistema de Monitoramento Elétrico Residencial</p>
       </div>
       <div class="footer-copy">

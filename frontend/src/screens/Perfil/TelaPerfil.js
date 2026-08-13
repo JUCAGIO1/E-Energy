@@ -32,7 +32,7 @@ export default function TelaPerfil({ navigation }) {
 
   const handleTestarAlerta = () => {
     dispararAlertaConsumo(
-      "🚨 ALERTA E-ENERGY: PICO DE CORRENTE",
+      "ALERTA E-ENERGY: PICO DE CORRENTE",
       "Detector de sobrecarga acionado! A corrente no Chuveiro ultrapassou 16.5A."
     );
   };
@@ -41,7 +41,7 @@ export default function TelaPerfil({ navigation }) {
     <View style={styles.outerContainer}>
       <SafeAreaView style={styles.safeArea}>
         <ScrollView contentContainerStyle={styles.container}>
-          <Text style={styles.title}>👤 Perfil do Usuário</Text>
+          <Text style={styles.title}>Perfil do Usuário</Text>
 
           <View style={styles.infoBox}>
             <Text style={styles.label}>Nome:</Text>
@@ -53,26 +53,27 @@ export default function TelaPerfil({ navigation }) {
             <Text style={styles.value}>{usuario.email}</Text>
           </View>
 
-          {/* Sugestão 2: Exportação em PDF */}
+          {/* Exportação em PDF */}
           <CustomButton
-            title="📄 Exportar Relatório em PDF"
-            icon={<Ionicons name="document-text" size={20} color={Colors.textDark} style={{ marginRight: 8 }} />}
+            title="Exportar Relatório em PDF"
+            icon={<Ionicons name="document-text-outline" size={18} color={Colors.textDark} style={{ marginRight: 8 }} />}
             onPress={handleGerarPDF}
             style={{ marginTop: 15 }}
           />
 
-          {/* Sugestão 3: Alerta Push de Consumo Excessivo */}
+          {/* Alerta Push de Consumo Excessivo */}
           <CustomButton
-            title="🚨 Testar Alerta de Sobrecarga"
+            title="Testar Alerta de Sobrecarga"
             variant="secondary"
-            icon={<Ionicons name="warning" size={20} color={Colors.primary} style={{ marginRight: 8 }} />}
+            icon={<Ionicons name="warning-outline" size={18} color={Colors.primary} style={{ marginRight: 8 }} />}
             onPress={handleTestarAlerta}
             style={{ marginTop: 8 }}
           />
 
           <CustomButton
-            title="⚙️ Configurações"
+            title="Configurações"
             variant="secondary"
+            icon={<Ionicons name="settings-outline" size={18} color={Colors.primary} style={{ marginRight: 8 }} />}
             onPress={() => navigation.navigate("Configuracoes")}
             style={{ marginTop: 8 }}
           />
@@ -80,6 +81,7 @@ export default function TelaPerfil({ navigation }) {
           <CustomButton
             title="Sair da Conta"
             variant="outline"
+            icon={<Ionicons name="log-out-outline" size={18} color={Colors.primary} style={{ marginRight: 8 }} />}
             onPress={handleLogout}
             style={{ marginTop: 15, marginBottom: 20 }}
           />
@@ -101,7 +103,7 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 25,
-    justify.content: "center",
+    justifyContent: "center",
   },
   title: {
     fontSize: 26,

@@ -464,6 +464,33 @@ body {
   color: var(--text-muted);
 }
 
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 8px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+.social-link:hover {
+  color: var(--primary-gold);
+  border-color: var(--primary-gold);
+  transform: translateY(-2px);
+}
+
 .footer-copy {
   font-size: 12px;
   color: var(--text-muted);
@@ -475,4 +502,5 @@ body {
   .nav-links { display: none; }
   .hero-stats { grid-template-columns: 1fr; }
   .calc-box { grid-template-columns: 1fr; }
+  .footer-container { flex-direction: column; text-align: center; }
 }

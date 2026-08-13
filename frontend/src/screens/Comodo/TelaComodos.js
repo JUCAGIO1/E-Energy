@@ -15,8 +15,9 @@ import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
 import { Colors } from "../../constants/colors";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import Entypo from "@expo/vector-icons/Entypo";
 
-export default function TelaComodos({ route }) {
+export default function TelaComodos({ route, navigation }) {
   const { nomeCasa } = route.params || { nomeCasa: "Casa" };
 
   const [releStatus, setReleStatus] = useState(false);
@@ -92,10 +93,22 @@ export default function TelaComodos({ route }) {
     }
   };
 
+  const handleTrocarCasa = () => {
+    if (navigation && navigation.goBack) {
+      navigation.goBack();
+    }
+  };
+
   return (
     <View style={styles.outerContainer}>
       <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
         <ScrollView contentContainerStyle={styles.container}>
+          {/* Botão Superior de Voltar / Trocar de Casa */}
+          <TouchableOpacity style={styles.trocarCasaHeader} onPress={handleTrocarCasa}>
+            <Entypo name="chevron-left" size={20} color={Colors.primary} />
+            <Text style={styles.trocarCasaHeaderText}>Sair / Trocar de Casa</Text>
+          </TouchableOpacity>
+
           <Text style={styles.title}>🏡 {nomeCasa}</Text>
           <Text style={styles.subtitle}>Monitoramento de Corrente Elétrica e Cômodos</Text>
 
@@ -157,6 +170,14 @@ export default function TelaComodos({ route }) {
             </Text>
           </TouchableOpacity>
 
+          {/* Botão Inferior de Trocar de Casa */}
+          <CustomButton
+            title="🏠 Sair da Casa (Voltar para Lista de Casas)"
+            variant="outline"
+            style={{ marginTop: 5, marginBottom: 20 }}
+            onPress={handleTrocarCasa}
+          />
+
           {/* Modal de Cadastro de Cômodo */}
           <Modal
             visible={modalVisivel}
@@ -205,12 +226,30 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: Colors.background,
   },
+  trocarCasaHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "flex-start",
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    backgroundColor: Colors.surface,
+    borderColor: Colors.border,
+    borderWidth: 1,
+    borderRadius: 20,
+    marginBottom: 10,
+  },
+  trocarCasaHeaderText: {
+    fontSize: 13,
+    fontWeight: "bold",
+    color: Colors.primary,
+    marginLeft: 2,
+  },
   title: {
     fontSize: 26,
     fontWeight: "bold",
     color: Colors.primary,
     textAlign: "center",
-    marginTop: 10,
+    marginTop: 5,
   },
   subtitle: {
     fontSize: 14,
@@ -272,7 +311,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 25,
-    marginBottom: 20,
+    marginBottom: 15,
   },
   releButtonActive: {
     backgroundColor: Colors.primary,

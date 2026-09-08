@@ -1392,6 +1392,14 @@ button, input, select {
   border-color: var(--color-accent-cyan);
 }
 
+.team-card-emerald {
+  border-color: rgba(16, 185, 129, 0.35);
+}
+
+.team-card-emerald:hover {
+  border-color: var(--color-success);
+}
+
 .team-avatar-wrapper {
   display: flex;
   flex-direction: column;
@@ -1414,6 +1422,11 @@ button, input, select {
 .team-avatar-frame-cyan {
   border-color: var(--color-accent-cyan);
   box-shadow: var(--shadow-cyan);
+}
+
+.team-avatar-frame-emerald {
+  border-color: var(--color-success);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.25);
 }
 
 .team-avatar-svg {

@@ -86,7 +86,8 @@ A plataforma foi arquitetada para atender 4 perfis prioritários:
 
 | Integrante | Função / Cargo | Responsabilidades no Projeto |
 | :--- | :--- | :--- |
-| **Giovanni Correa Amadio** | Líder do Projeto & Desenvolvedor Full Stack / IoT | • Concepção e arquitetura do ecossistema E-Energy<br>• Desenvolvimento do firmware C++ e calibração True RMS no ESP32<br>• Criação da API REST Express e integração MongoDB Atlas<br>• Desenvolvimento do aplicativo mobile React Native/Expo<br>• Implementação da segurança Zero Trust (HMAC, eFuse, RateLimit)<br>• Desenvolvimento da Landing Page e identidade visual |
+| **Giovanni Correa Amadio** | Líder do Projeto & Engenheiro de Software Full Stack | • Concepção e arquitetura lógica do ecossistema E-Energy<br>• Criação da API REST Express e integração MongoDB Atlas<br>• Desenvolvimento do aplicativo mobile React Native/Expo<br>• Sistema de relatórios e laudos auditáveis em PDF<br>• Implementação da segurança Zero Trust (HMAC-SHA256, eFuse, RateLimit)<br>• Desenvolvimento da Landing Page e identidade visual |
+| **João Miguel** | Engenheiro de Hardware & Especialista em Sistemas Físicos / IoT | • **Parte Física & Hardware:** montagem e fixação dos componentes no quadro elétrico (trilho DIN)<br>• Instalação, posicionamento e calibração dos sensores de corrente SCT-013<br>• Integração de módulos de relé 5V para corte e proteção física contra sobrecargas<br>• Prototipagem em bancada e testes elétricos de segurança residencial (127V / 220V)<br>• Acondicionamento de sinal analógico e mitigação de ruídos eletromagnéticos |
 
 * **Instituição de Ensino:** ETEC / Centro Paula Souza  
 * **Curso / Disciplina:** Programação Web III - AMS (Articulação da Formação Profissional Média e Superior)

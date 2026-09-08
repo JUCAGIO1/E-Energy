@@ -1359,20 +1359,37 @@ button, input, select {
 
 /* 12. Seção Equipe (4.7 do PDF) */
 .team-container {
-  max-width: 860px;
+  max-width: 940px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
 }
 
 .team-card {
   background: var(--bg-card);
   border: 1px solid var(--border-gold);
   border-radius: var(--radius-lg);
-  padding: 40px;
+  padding: 36px;
   display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 36px;
+  grid-template-columns: 150px 1fr;
+  gap: 32px;
   align-items: center;
   box-shadow: var(--shadow-card);
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.team-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-primary);
+}
+
+.team-card-cyan {
+  border-color: var(--border-cyan);
+}
+
+.team-card-cyan:hover {
+  border-color: var(--color-accent-cyan);
 }
 
 .team-avatar-wrapper {
@@ -1383,8 +1400,8 @@ button, input, select {
 }
 
 .team-avatar-frame {
-  width: 130px;
-  height: 130px;
+  width: 125px;
+  height: 125px;
   border-radius: 50%;
   border: 3px solid var(--color-primary);
   padding: 4px;
@@ -1392,6 +1409,11 @@ button, input, select {
   position: relative;
   overflow: hidden;
   box-shadow: var(--shadow-gold);
+}
+
+.team-avatar-frame-cyan {
+  border-color: var(--color-accent-cyan);
+  box-shadow: var(--shadow-cyan);
 }
 
 .team-avatar-svg {

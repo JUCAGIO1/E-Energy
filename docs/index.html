@@ -3,237 +3,933 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>E-Energy | Gestão Inteligente de Energia Elétrica (IoT)</title>
-  <meta name="description" content="E-Energy - Plataforma IoT de monitoramento elétrico residencial em tempo real com ESP32, inteligência financeira e segurança industrial.">
   
-  <!-- Tipografia Google Fonts -->
+  <!-- SEO & Metadados -->
+  <title>E-Energy | Gestão Inteligente e Monitoramento de Energia Elétrica com IoT</title>
+  <meta name="description" content="E-Energy: Plataforma integrada de hardware IoT (ESP32) e software mobile para monitoramento e gestão do consumo elétrico residencial em tempo real.">
+  <meta name="author" content="Giovanni Correa Amadio - E-Energy">
+  <meta name="theme-color" content="#FFD700">
+
+  <!-- Favicon Oficial -->
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/favicon.png">
+
+  <!-- Tipografia Google Fonts (Outfit & Inter) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Folha de Estilos -->
+  <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Navbar Header -->
-  <header class="navbar">
-    <div class="nav-container">
-      <a href="#" class="brand-logo">
-        <svg class="logo-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-        </svg>
-        <span class="logo-text">E-ENERGY</span>
+  <!-- ==========================================
+       1. CABEÇALHO & BARRA DE NAVEGAÇÃO
+       ========================================== -->
+  <header class="navbar" role="banner">
+    <div class="container nav-container">
+      <!-- Identidade / Logotipo -->
+      <a href="#inicio" class="nav-brand" aria-label="E-Energy - Início">
+        <img src="img/logo.png" alt="Logotipo E-Energy - Plugue de energia estilizado com raio dourado" class="nav-logo-img">
+        <span class="nav-brand-text">E-<span>ENERGY</span></span>
       </a>
-      <nav class="nav-links">
-        <a href="#recursos">Recursos</a>
-        <a href="#calculadora">Calculadora SP</a>
-        <a href="#seguranca">Segurança</a>
-        <a href="#tcc">Sobre o TCC</a>
+
+      <!-- Menu de Navegação Principal -->
+      <nav id="navMenu" class="nav-menu" role="navigation" aria-label="Navegação Principal">
+        <a href="#inicio" class="nav-link active">Início</a>
+        <a href="#sobre" class="nav-link">Sobre</a>
+        <a href="#problema-solucao" class="nav-link">Problema & Solução</a>
+        <a href="#publico" class="nav-link">Público-Alvo</a>
+        <a href="#funcionalidades" class="nav-link">Funcionalidades</a>
+        <a href="#calculadora" class="nav-link">Calculadora</a>
+        <a href="#tecnologias" class="nav-link">Tecnologias</a>
+        <a href="#equipe" class="nav-link">Equipe</a>
       </nav>
-      <a href="#calculadora" class="btn-primary-small">Simular Custo</a>
+
+      <!-- Botão de Ação Rápida no Desktop -->
+      <div class="nav-actions">
+        <a href="#calculadora" class="btn btn-primary" title="Simular consumo na calculadora">Simular Economia</a>
+      </div>
+
+      <!-- Botão Menu Mobile (Hamburguer) -->
+      <button id="mobileToggle" class="mobile-toggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="navMenu">
+        <svg class="mobile-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <div class="hero-container">
-      <div class="badge-pill">Tecnologia IoT & Gestão Energética Residencial</div>
-      <h1 class="hero-title">Monitore o Consumo Elétrico da sua Casa em <span class="highlight-gold">Tempo Real</span></h1>
-      <p class="hero-subtitle">
-        Saber para onde vai a energia da sua casa não é mais mistério. O E-Energy conecta sensores na caixa de disjuntores ao seu celular, entregando previsões financeiras e economia real na conta de luz.
-      </p>
-      <div class="hero-actions">
-        <a href="#calculadora" class="btn-hero-primary">Simular Economia de Energia</a>
-        <a href="#recursos" class="btn-hero-secondary">Conhecer a Solução</a>
-      </div>
-
-      <!-- Card estatístico em destaque -->
-      <div class="hero-stats">
-        <div class="stat-card">
-          <div class="stat-value">95%+</div>
-          <div class="stat-label">Cobertura Tarifária de SP</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">RMS</div>
-          <div class="stat-label">Precisão Senoidal ESP32</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">AES-128</div>
-          <div class="stat-label">Criptografia de Hardware</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Recursos Principais -->
-  <section id="recursos" class="features-section">
-    <div class="section-header">
-      <h2 class="section-title">Engenharia e Inovação a Serviço da Eficiência</h2>
-      <p class="section-subtitle">Tudo o que você precisa para controlar disjuntores, tomadas e economizar na fatura de energia.</p>
-    </div>
-
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-svg-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-          </svg>
-        </div>
-        <h3>Monitoramento no Quadro Elétrico</h3>
-        <p>O hardware ESP32 instalado no trilho DIN da caixa de disjuntores mede a corrente RMS em amperes e a potência ativa em watts de cada circuito elétrico.</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-svg-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-            <line x1="12" y1="18" x2="12.01" y2="18"></line>
-          </svg>
-        </div>
-        <h3>Aplicativo Mobile Interativo</h3>
-        <p>Dashboard dark intuitivo construído em React Native/Expo, exibindo gráficos de consumo em tempo real, relés de corte e notificações push de sobrecarga.</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-svg-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-            <polyline points="10 9 9 9 8 9"></polyline>
-          </svg>
-        </div>
-        <h3>Relatórios Auditáveis em PDF</h3>
-        <p>Geração instantânea de laudos de eficiência energética com tabelas de kWh, taxas da ANEEL e selo de auditoria de segurança da instalação.</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-svg-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="2" y1="12" x2="22" y2="12"></line>
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-          </svg>
-        </div>
-        <h3>Média Tarifária ANEEL / SP</h3>
-        <p>Integração direta com as tarifas médias de São Paulo (ENEL SP, CPFL Paulista, EDP SP) calculando exatamente os valores em Reais (R$).</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Calculadora Interativa ao Vivo -->
-  <section id="calculadora" class="calc-section">
-    <div class="calc-container">
-      <div class="calc-header">
-        <h2>Simule o Custo de Qualquer Aparelho em SP</h2>
-        <p>Descubra quanto um eletrodoméstico custa na sua conta de luz usando a tarifa média de São Paulo (R$ 0,85/kWh com impostos).</p>
-      </div>
-
-      <div class="calc-box">
-        <div class="calc-inputs">
-          <div class="input-group">
-            <label for="potencia">Potência do Aparelho (Watts):</label>
-            <input type="number" id="potencia" value="1500" placeholder="Ex: 1500W (Ar Condicionado/Secador)">
+  <main>
+    <!-- ==========================================
+         4.1 APRESENTAÇÃO INICIAL (HERO)
+         ========================================== -->
+    <section id="inicio" class="hero-section" aria-label="Apresentação Inicial">
+      <div class="container hero-grid">
+        <!-- Conteúdo Textual do Hero -->
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            <span class="hero-badge-text">Inovação IoT & Gestão Energética Residencial</span>
           </div>
 
-          <div class="input-group">
-            <label for="horas">Horas de Uso por Dia:</label>
-            <input type="number" id="horas" value="4" placeholder="Ex: 4 horas">
+          <h1 class="hero-title">
+            Monitore o Consumo Elétrico em <span class="text-gold">Tempo Real</span> e Reduza a Conta de Luz
+          </h1>
+
+          <p class="hero-description">
+            <strong>E-Energy</strong> é a solução de engenharia inteligente que conecta a caixa de disjuntores da sua casa ao seu smartphone. Tenha previsão exata de custos em Reais (R$), detecção preventiva de sobrecargas e elimine o desperdício de energia.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#calculadora" class="btn btn-primary btn-lg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              Simular Minha Economia
+            </a>
+            <a href="https://github.com/JUCAGIO1/E-Energy" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-lg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+              Ver no GitHub
+            </a>
           </div>
 
-          <div class="input-group">
-            <label for="dias">Dias por Mês:</label>
-            <input type="number" id="dias" value="30" placeholder="Ex: 30 dias">
+          <!-- Métricas de Destaque -->
+          <div class="hero-metrics">
+            <div class="metric-card">
+              <span class="metric-value">95%+</span>
+              <span class="metric-label">Acurácia Tarifária (SP / ANEEL)</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-value metric-value-cyan">True RMS</span>
+              <span class="metric-label">Amostragem Senoidal 60Hz</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-value">Até 30%</span>
+              <span class="metric-label">Redução no Custo Mensal</span>
+            </div>
           </div>
         </div>
 
-        <div class="calc-results">
-          <div class="result-card">
-            <span class="result-title">Consumo Mensal:</span>
-            <span class="result-value" id="resKwh">180.0 kWh</span>
+        <!-- Demonstração Visual Interativa (Mockup do App Mobile) -->
+        <div class="hero-visual">
+          <div class="phone-mockup" aria-hidden="true">
+            <div class="phone-screen">
+              <div class="app-screen-header">
+                <span class="app-screen-title">Painel Residencial</span>
+                <div class="app-status-live">
+                  <span class="live-dot"></span>
+                  <span>ESP32 ATIVO</span>
+                </div>
+              </div>
+
+              <!-- Cartão do Medidor Principal -->
+              <div class="app-gauge-card">
+                <div class="app-gauge-label">Potência Instantânea Total</div>
+                <div class="app-gauge-number" id="liveGaugeWatts">435 W</div>
+                <div class="app-gauge-sub">Corrente: 3.42 A &bull; 127V Estável</div>
+              </div>
+
+              <!-- Lista dos Circuitos Elétricos Ativos -->
+              <div class="app-circuits-list">
+                <div class="circuit-item">
+                  <div class="circuit-info">
+                    <span class="circuit-icon">⚡</span>
+                    <span class="circuit-name">Chuveiro Suíte</span>
+                  </div>
+                  <span class="circuit-power">0 W</span>
+                </div>
+                <div class="circuit-item">
+                  <div class="circuit-info">
+                    <span class="circuit-icon">❄️</span>
+                    <span class="circuit-name">Ar Condicionado</span>
+                  </div>
+                  <span class="circuit-power" style="color:#00E5FF;">240 W</span>
+                </div>
+                <div class="circuit-item">
+                  <div class="circuit-info">
+                    <span class="circuit-icon">🔌</span>
+                    <span class="circuit-name">Cozinha / Geladeira</span>
+                  </div>
+                  <span class="circuit-power" style="color:#FFD700;">195 W</span>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="result-card result-card-gold">
-            <span class="result-title">Custo Estimado em SP:</span>
-            <span class="result-value-gold" id="resValor">R$ 153,00 / mês</span>
+          <!-- Card Flutuante de Segurança de Hardware -->
+          <div class="hero-floating-badge">
+            <div class="floating-icon-box">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            </div>
+            <div>
+              <div class="floating-text-title">Criptografia de Hardware</div>
+              <div class="floating-text-sub">HMAC-SHA256 & Proteção eFuse</div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Camada de Segurança -->
-  <section id="seguranca" class="security-section">
-    <div class="section-header">
-      <h2 class="section-title">Arquitetura de Segurança Zero Trust</h2>
-      <p class="section-subtitle">Desenvolvido com padrões industriais contra ciberataques, vazamentos e adulteração de dados.</p>
-    </div>
+    <!-- ==========================================
+         4.2 SOBRE O PROJETO
+         ========================================== -->
+    <section id="sobre" class="section section-alt" aria-label="Sobre o Projeto">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">Engenharia & Sustentabilidade</div>
+          <h2 class="section-title">Sobre o Projeto <span class="text-gold">E-Energy</span></h2>
+          <p class="section-subtitle">
+            Uma ponte tecnológica entre o quadro elétrico residencial e a tomada de decisão consciente do consumidor moderno.
+          </p>
+        </div>
 
-    <div class="security-cards">
-      <div class="sec-card">
-        <h4>HMAC-SHA256 & eFuse</h4>
-        <p>Chave secreta de 256 bits gravada no silício do microcontrolador. Cada medição enviada contém assinatura digital não forjável.</p>
+        <div class="about-grid">
+          <!-- Coluna 1: Banner e Destaques -->
+          <div class="about-card-banner">
+            <div class="banner-logo-wrapper">
+              <img src="img/logo_banner.png" alt="Logotipo Banner Oficial E-Energy" loading="lazy">
+            </div>
+            <h3 style="font-family: var(--font-heading); font-size: 22px; margin-bottom: 12px; color: #FFFFFF;">
+              Conexão Direta com a Nuvem
+            </h3>
+            <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">
+              O E-Energy integra microcontroladores de 32 bits, sensores amperimétricos não-invasivos e servidores de alta disponibilidade para gerar relatórios transparentes e alertas automáticos.
+            </p>
+
+            <ul class="about-highlights-list">
+              <li class="about-highlight-item">
+                <svg class="about-highlight-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>Origem Acadêmica:</strong> Desenvolvido na disciplina de Programação Web III (AMS).</span>
+              </li>
+              <li class="about-highlight-item">
+                <svg class="about-highlight-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>Hardware Não Invasivo:</strong> Sensores tipo alicate sem necessidade de cortar fios.</span>
+              </li>
+              <li class="about-highlight-item">
+                <svg class="about-highlight-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>Arquitetura Aberta:</strong> Compatível com padrões da ANEEL e concessionárias de SP.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Coluna 2: Contexto e Pilares -->
+          <div class="about-text-column">
+            <h3 style="font-family: var(--font-heading); font-size: 26px; font-weight: 800; margin-bottom: 16px; color: #FFFFFF;">
+              Transformando Dados Elétricos em Economia Real
+            </h3>
+            <p>
+              A energia elétrica é um dos insumos essenciais mais caros no orçamento das famílias e pequenos negócios brasileiros. Entretanto, o modelo tradicional de consumo é completamente <strong>retroativo</strong>: você utiliza a energia às cegas durante todo o mês e descobre o valor apenas quando a conta chega.
+            </p>
+            <p>
+              O <strong>objetivo principal</strong> do E-Energy é quebrar essa barreira de invisibilidade. A plataforma calcula a corrente eficaz (RMS), converte watts consumidos em reais de acordo com a tarifa local e notifica o usuário no exato momento em que um equipamento apresenta consumo excessivo ou defeito elétrico.
+            </p>
+
+            <!-- 4 Pilares -->
+            <div class="about-pillars">
+              <div class="pillar-item">
+                <div class="pillar-title">💡 Eficiência Energética</div>
+                <div class="pillar-desc">Identifique com precisão cirúrgica quais equipamentos geram picos na fatura.</div>
+              </div>
+              <div class="pillar-item">
+                <div class="pillar-title">🛡️ Proteção & Segurança</div>
+                <div class="pillar-desc">Detecção imediata de sobrecargas e aquecimentos anormais na fiação.</div>
+              </div>
+              <div class="pillar-item">
+                <div class="pillar-title">📱 Simplicidade Mobile</div>
+                <div class="pillar-desc">Interface intuitiva para visualização imediata por cômodos e aparelhos.</div>
+              </div>
+              <div class="pillar-item">
+                <div class="pillar-title">🌱 Sustentabilidade</div>
+                <div class="pillar-desc">Redução da pegada de carbono através da diminuição de desperdícios.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         4.3 & 4.4 PROBLEMA & SOLUÇÃO
+         ========================================== -->
+    <section id="problema-solucao" class="section" aria-label="Problema e Solução">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag section-tag-cyan">Diagnóstico & Engenharia</div>
+          <h2 class="section-title">O Desafio do Setor Elétrico & Nossa Solução</h2>
+          <p class="section-subtitle">
+            Entenda como o E-Energy substitui a incerteza do modelo tradicional por monitoramento ativo e preditivo.
+          </p>
+        </div>
+
+        <div class="problem-solution-grid">
+          <!-- O Problema (4.3 do PDF) -->
+          <article class="comparison-box problem-box">
+            <div class="comparison-tag problem-tag">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+              <span>4.3 O Problema Atual</span>
+            </div>
+
+            <h3 class="comparison-title">A "Caixa-Preta" da Conta de Luz Tradicional</h3>
+            <p class="comparison-lead">
+              No Brasil, os consumidores convivem com aumentos tarifários sistemáticos, bandeiras amarela e vermelha e nenhuma ferramenta acessível para auditar o consumo diário.
+            </p>
+
+            <ul class="comparison-list">
+              <li class="comparison-list-item">
+                <span class="icon-danger">✕</span>
+                <div>
+                  <strong>Consumo às cegas:</strong>
+                  <span>O usuário não sabe quanto um banho quente, ar-condicionado ou geladeira gasta individualmente.</span>
+                </div>
+              </li>
+              <li class="comparison-list-item">
+                <span class="icon-danger">✕</span>
+                <div>
+                  <strong>Cobranças retroativas surpresa:</strong>
+                  <span>A conta de luz chega no final do mês sem opção de remediação prévia.</span>
+                </div>
+              </li>
+              <li class="comparison-list-item">
+                <span class="icon-danger">✕</span>
+                <div>
+                  <strong>Riscos de incêndio e sobrecargas:</strong>
+                  <span>Fugas de corrente e condutores sobrecarregados passam despercebidos sem alarmes térmicos.</span>
+                </div>
+              </li>
+              <li class="comparison-list-item">
+                <span class="icon-danger">✕</span>
+                <div>
+                  <strong>Quem é afetado:</strong>
+                  <span>Famílias com orçamento sobrecarregado, pequenos comerciantes e síndicos prediais.</span>
+                </div>
+              </li>
+            </ul>
+          </article>
+
+          <!-- A Solução (4.4 do PDF) -->
+          <article class="comparison-box solution-box">
+            <div class="comparison-tag solution-tag">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>4.4 A Solução E-Energy</span>
+            </div>
+
+            <h3 class="comparison-title">Transparência Elétrica em Tempo Real com IoT</h3>
+            <p class="comparison-lead">
+              Implementamos uma camada de inteligência com amostragem matemática direta no quadro geral, correlacionando corrente e tarifas vigentes.
+            </p>
+
+            <ul class="comparison-list">
+              <li class="comparison-list-item">
+                <span class="icon-success">✓</span>
+                <div>
+                  <strong>Leitura RMS Instantânea:</strong>
+                  <span>Sensores de corrente amostram a onda a 60Hz no ESP32 e enviam leituras precisas a cada 5 segundos.</span>
+                </div>
+              </li>
+              <li class="comparison-list-item">
+                <span class="icon-success">✓</span>
+                <div>
+                  <strong>Conversão Automática em Reais (R$):</strong>
+                  <span>Tarifas vigentes (ex: R$ 0,85/kWh de SP) calculam o gasto em dinheiro na tela principal do celular.</span>
+                </div>
+              </li>
+              <li class="comparison-list-item">
+                <span class="icon-success">✓</span>
+                <div>
+                  <strong>Atuação Preventiva & Notificações Push:</strong>
+                  <span>Alertas instantâneos quando um circuito atinge corrente crítica, com possibilidade de desarme de relé.</span>
+                </div>
+              </li>
+              <li class="comparison-list-item">
+                <span class="icon-success">✓</span>
+                <div>
+                  <strong>Laudos Auditáveis em PDF:</strong>
+                  <span>Geração de relatórios com um toque para comparar meses e planejar redução de custos.</span>
+                </div>
+              </li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         4.5 PÚBLICO-ALVO
+         ========================================== -->
+    <section id="publico" class="section section-alt" aria-label="Público-Alvo">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">Segmentação de Mercado</div>
+          <h2 class="section-title">Para Quem Foi Desenvolvido o <span class="text-gold">E-Energy</span>?</h2>
+          <p class="section-subtitle">
+            Solução versátil projetada para atender desde o morador residencial até o gestor de estabelecimentos comerciais.
+          </p>
+        </div>
+
+        <div class="target-grid">
+          <!-- Segmento 1: Residências -->
+          <div class="target-card">
+            <div class="target-icon-box">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            </div>
+            <h3>Famílias & Residências</h3>
+            <p>Proprietários e inquilinos que desejam economizar no final do mês, monitorar o uso de chuveiros e ar-condicionado e educar o consumo doméstico.</p>
+            <span class="target-benefit-badge">Economia de até 30% na conta</span>
+          </div>
+
+          <!-- Segmento 2: Comércios -->
+          <div class="target-card">
+            <div class="target-icon-box target-icon-box-cyan">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            </div>
+            <h3>Pequenos Comércios</h3>
+            <p>Padarias, oficinas, restaurantes e pequenos escritórios que dependem criticamente de freezers, motores e maquinário elétrico contínuo.</p>
+            <span class="target-benefit-badge" style="color:var(--color-accent-cyan);">Previsibilidade de Custos Fixos</span>
+          </div>
+
+          <!-- Segmento 3: Síndicos e Condomínios -->
+          <div class="target-card">
+            <div class="target-icon-box">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="2"></line><path d="M9 12h8"></path><path d="M9 6h8"></path><path d="M9 18h8"></path></svg>
+            </div>
+            <h3>Síndicos & Condomínios</h3>
+            <p>Gestores prediais que necessitam auditar o consumo elétrico de áreas comuns, bombas de recalque d'água, portões e iluminação condominial.</p>
+            <span class="target-benefit-badge">Rateio Justo & Transparente</span>
+          </div>
+
+          <!-- Segmento 4: Entusiastas de IoT -->
+          <div class="target-card">
+            <div class="target-icon-box target-icon-box-cyan">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+            </div>
+            <h3>Casas Inteligentes (Smart Home)</h3>
+            <p>Adeptos de automação residencial, domótica e sustentabilidade que valorizam integração, controle de relés e acompanhamento em dashboards.</p>
+            <span class="target-benefit-badge" style="color:var(--color-accent-cyan);">Controle Inteligente & APIs</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         4.6 FUNCIONALIDADES
+         ========================================== -->
+    <section id="funcionalidades" class="section" aria-label="Funcionalidades Principais">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">Recursos do Ecossistema</div>
+          <h2 class="section-title">Funcionalidades Projetadas para o seu Dia a Dia</h2>
+          <p class="section-subtitle">
+            Da caixa de disjuntores ao relatório impresso: conheça cada recurso que torna o E-Energy completo e confiável.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <!-- Funcionalidade 1 -->
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </div>
+            <h3>Medição True RMS no QDF</h3>
+            <p>O hardware ESP32 lê a onda senoidal a cada ciclo da rede elétrica, calculando a corrente eficaz exata em Amperes sem distorções harmônicas.</p>
+            <div class="feature-tags-list">
+              <span class="feature-tag">Sensor SCT-013</span>
+              <span class="feature-tag">Precisão ±2%</span>
+            </div>
+          </div>
+
+          <!-- Funcionalidade 2 -->
+          <div class="feature-card">
+            <div class="feature-icon-wrapper feature-icon-wrapper-cyan">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+            </div>
+            <h3>Setorização por Cômodos e Circuitos</h3>
+            <p>Organize a residência em cômodos (Quarto, Cozinha, Banheiro) e saiba o peso individual de cada disjuntor no valor final da fatura.</p>
+            <div class="feature-tags-list">
+              <span class="feature-tag">Multi-Casas</span>
+              <span class="feature-tag">Visão Detalhada</span>
+            </div>
+          </div>
+
+          <!-- Funcionalidade 3 -->
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            </div>
+            <h3>Conversão de Tarifas ANEEL/SP</h3>
+            <p>Integração dos valores médios do kWh com tributos (ICMS, PIS, COFINS) do Estado de São Paulo, convertendo Watts instantâneos em Reais.</p>
+            <div class="feature-tags-list">
+              <span class="feature-tag">R$ 0,85/kWh Base</span>
+              <span class="feature-tag">Previsão Mensal</span>
+            </div>
+          </div>
+
+          <!-- Funcionalidade 4 -->
+          <div class="feature-card">
+            <div class="feature-icon-wrapper feature-icon-wrapper-cyan">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            </div>
+            <h3>Alertas de Picos e Sobrecarga</h3>
+            <p>Notificações imediatas no smartphone quando a corrente ultrapassar o limite configurado (ex: chuveiro + aquecedor na mesma fase).</p>
+            <div class="feature-tags-list">
+              <span class="feature-tag">Push Notifications</span>
+              <span class="feature-tag">Anti-Sobreaquecimento</span>
+            </div>
+          </div>
+
+          <!-- Funcionalidade 5 -->
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            </div>
+            <h3>Acionamento Remoto por Relé</h3>
+            <p>Corte preventivo ou rearme de circuitos elétricos e tomadas inteligentes à distância através do aplicativo mobile com segurança reforçada.</p>
+            <div class="feature-tags-list">
+              <span class="feature-tag">Módulo Relé 5V</span>
+              <span class="feature-tag">Corte de Emergência</span>
+            </div>
+          </div>
+
+          <!-- Funcionalidade 6 -->
+          <div class="feature-card">
+            <div class="feature-icon-wrapper feature-icon-wrapper-cyan">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            </div>
+            <h3>Laudos e Relatórios Auditáveis em PDF</h3>
+            <p>Exportação instantânea de relatórios completos em formato PDF com data, hora, tabela detalhada por cômodos e assinatura técnica.</p>
+            <div class="feature-tags-list">
+              <span class="feature-tag">Exportação Expo-Print</span>
+              <span class="feature-tag">Compartilhamento Fácil</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SIMULADOR / CALCULADORA INTERATIVA
+         ========================================== -->
+    <section id="calculadora" class="section section-alt" aria-label="Calculadora de Consumo">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">Simulação Interativa</div>
+          <h2 class="section-title">Calculadora de Custo & Economia Energética</h2>
+          <p class="section-subtitle">
+            Descubra o impacto real de qualquer aparelho elétrico no seu bolso usando a tarifa oficial de São Paulo.
+          </p>
+        </div>
+
+        <div class="calc-card-wrapper">
+          <!-- Botões Rápidos de Aparelhos (Presets) -->
+          <div class="calc-presets-title">Selecione um aparelho para simular rapidamente:</div>
+          <div class="calc-presets-row" role="group" aria-label="Aparelhos comuns pré-configurados">
+            <button type="button" class="preset-btn" data-preset="chuveiro">🚿 Chuveiro (5500W)</button>
+            <button type="button" class="preset-btn" data-preset="ar">❄️ Ar-Condicionado (1400W)</button>
+            <button type="button" class="preset-btn" data-preset="geladeira">🧊 Geladeira (250W)</button>
+            <button type="button" class="preset-btn" data-preset="pc">💻 PC Gamer (350W)</button>
+            <button type="button" class="preset-btn" data-preset="tv">📺 Smart TV 50" (130W)</button>
+            <button type="button" class="preset-btn" data-preset="microondas">🍿 Micro-ondas (1200W)</button>
+          </div>
+
+          <div class="calc-layout">
+            <!-- Formulário de Entrada de Dados -->
+            <form class="calc-form" onsubmit="return false;" aria-label="Formulário de Cálculo de Energia">
+              <div class="calc-field">
+                <label for="calcPotencia" class="calc-label">
+                  <span>Potência do Equipamento</span>
+                  <span class="calc-label-hint">Indicado na etiqueta do aparelho</span>
+                </label>
+                <div class="calc-input-group">
+                  <input type="number" id="calcPotencia" class="calc-input" value="1500" min="1" max="25000" step="10" placeholder="Ex: 1500">
+                  <span class="calc-unit">Watts</span>
+                </div>
+              </div>
+
+              <div class="calc-field">
+                <label for="calcHoras" class="calc-label">
+                  <span>Tempo de Uso Diário</span>
+                  <span class="calc-label-hint">Horas médias por dia</span>
+                </label>
+                <div class="calc-input-group">
+                  <input type="number" id="calcHoras" class="calc-input" value="4" min="0.1" max="24" step="0.5" placeholder="Ex: 4">
+                  <span class="calc-unit">Horas/dia</span>
+                </div>
+              </div>
+
+              <div class="calc-field">
+                <label for="calcDias" class="calc-label">
+                  <span>Frequência no Mês</span>
+                  <span class="calc-label-hint">Dias de utilização mensal</span>
+                </label>
+                <div class="calc-input-group">
+                  <input type="number" id="calcDias" class="calc-input" value="30" min="1" max="31" step="1" placeholder="Ex: 30">
+                  <span class="calc-unit">Dias/mês</span>
+                </div>
+              </div>
+
+              <div class="calc-field">
+                <label for="calcTarifa" class="calc-label">
+                  <span>Tarifa de Energia (R$/kWh)</span>
+                  <span class="calc-label-hint">Média SP com tributos: R$ 0,85</span>
+                </label>
+                <div class="calc-input-group">
+                  <input type="number" id="calcTarifa" class="calc-input" value="0.85" min="0.1" max="5.0" step="0.01" placeholder="Ex: 0.85">
+                  <span class="calc-unit">R$ / kWh</span>
+                </div>
+              </div>
+            </form>
+
+            <!-- Painel de Resultados -->
+            <div class="calc-results-panel" role="region" aria-live="polite" aria-label="Resultado da Simulação de Consumo">
+              <div class="result-metric-hero">
+                <span class="result-hero-label">Custo Estimado Mensal</span>
+                <div class="result-hero-value" id="resValor">R$ 153,00</div>
+              </div>
+
+              <div class="results-grid-secondary">
+                <div class="sub-result-card">
+                  <span class="sub-result-label">Consumo Mensal</span>
+                  <div class="sub-result-val" id="resKwh">180.0 kWh</div>
+                </div>
+
+                <div class="sub-result-card">
+                  <span class="sub-result-label">Custo Médio Diário</span>
+                  <div class="sub-result-val" id="resDiario">R$ 5,10</div>
+                </div>
+
+                <div class="sub-result-card">
+                  <span class="sub-result-label">Projeção em 12 Meses</span>
+                  <div class="sub-result-val" id="resAnual">R$ 1.836,00</div>
+                </div>
+
+                <div class="sub-result-card" style="border-color: rgba(16, 185, 129, 0.4);">
+                  <span class="sub-result-label" style="color: var(--color-success);">Economia E-Energy (-25%)</span>
+                  <div class="sub-result-val" id="resEconomia" style="color: var(--color-success);">R$ 38,25 / mês</div>
+                </div>
+              </div>
+
+              <div class="calc-savings-banner">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                <div class="calc-savings-text">
+                  Com os alertas de anomalias e hábitos conscientes do <strong>E-Energy</strong>, você pode economizar mais de <strong>R$ 450,00 por ano</strong> apenas neste circuito elétrico!
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         4.8 TECNOLOGIAS UTILIZADAS
+         ========================================== -->
+    <section id="tecnologias" class="section" aria-label="Tecnologias Utilizadas">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag section-tag-cyan">Stack Tecnológica Completa</div>
+          <h2 class="section-title">Engenharia de Software e Hardware</h2>
+          <p class="section-subtitle">
+            Tecnologias consolidadas no mercado utilizadas para garantir segurança, baixa latência e alta escalabilidade.
+          </p>
+        </div>
+
+        <div class="tech-grid">
+          <!-- Tech 1 -->
+          <div class="tech-card">
+            <div class="tech-header">
+              <div class="tech-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+              </div>
+              <div>
+                <div class="tech-name">ESP32 & C++</div>
+                <span class="tech-layer-badge">Camada IoT / Firmware</span>
+              </div>
+            </div>
+            <p class="tech-desc">Microcontrolador 32-bit Dual Core de alta velocidade responsável pela amostragem contínua das formas de onda senoidais via ADC.</p>
+          </div>
+
+          <!-- Tech 2 -->
+          <div class="tech-card">
+            <div class="tech-header">
+              <div class="tech-icon-box tech-icon-box-cyan">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="12 6 12 12 16 14"></polygon></svg>
+              </div>
+              <div>
+                <div class="tech-name">Sensor SCT-013</div>
+                <span class="tech-layer-badge">Instrumentação Elétrica</span>
+              </div>
+            </div>
+            <p class="tech-desc">Transformador de corrente não invasivo que detecta campos magnéticos com segurança sem interrupção física do condutor energizado.</p>
+          </div>
+
+          <!-- Tech 3 -->
+          <div class="tech-card">
+            <div class="tech-header">
+              <div class="tech-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>
+              </div>
+              <div>
+                <div class="tech-name">Node.js & Express 5</div>
+                <span class="tech-layer-badge">Backend REST API</span>
+              </div>
+            </div>
+            <p class="tech-desc">Servidor de alta vazão equipado com middlewares de segurança, limitação de taxa contra DDoS (Rate Limiting) e Helmet.</p>
+          </div>
+
+          <!-- Tech 4 -->
+          <div class="tech-card">
+            <div class="tech-header">
+              <div class="tech-icon-box tech-icon-box-cyan">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+              </div>
+              <div>
+                <div class="tech-name">MongoDB Atlas</div>
+                <span class="tech-layer-badge">Banco de Dados NoSQL</span>
+              </div>
+            </div>
+            <p class="tech-desc">Armazenamento em nuvem otimizado para séries temporais de leituras elétricas, esquemas Mongoose e sanitização anti-injeção.</p>
+          </div>
+
+          <!-- Tech 5 -->
+          <div class="tech-card">
+            <div class="tech-header">
+              <div class="tech-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+              </div>
+              <div>
+                <div class="tech-name">React Native & Expo</div>
+                <span class="tech-layer-badge">Mobile Cross-Platform</span>
+              </div>
+            </div>
+            <p class="tech-desc">Aplicativo completo para iOS e Android com navegação moderna por abas, gráficos vetoriais interativos e relatórios em PDF.</p>
+          </div>
+
+          <!-- Tech 6 -->
+          <div class="tech-card">
+            <div class="tech-header">
+              <div class="tech-icon-box tech-icon-box-cyan">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              </div>
+              <div>
+                <div class="tech-name">HMAC-SHA256 & TLS 1.3</div>
+                <span class="tech-layer-badge">Segurança Zero Trust</span>
+              </div>
+            </div>
+            <p class="tech-desc">Assinatura digital por dispositivo gravada na memória eFuse, blindando a API contra falsificação de dados ou agentes maliciosos.</p>
+          </div>
+
+          <!-- Tech 7 -->
+          <div class="tech-card">
+            <div class="tech-header">
+              <div class="tech-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+              </div>
+              <div>
+                <div class="tech-name">HTML5, CSS3 & JS Moderno</div>
+                <span class="tech-layer-badge">Web & GitHub Pages</span>
+              </div>
+            </div>
+            <p class="tech-desc">Landing page estática ultra otimizada, 100% responsiva, sem dependências volumosas e compatível com as diretrizes do W3C.</p>
+          </div>
+
+          <!-- Tech 8 -->
+          <div class="tech-card">
+            <div class="tech-header">
+              <div class="tech-icon-box tech-icon-box-cyan">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+              </div>
+              <div>
+                <div class="tech-name">Git & GitHub Actions</div>
+                <span class="tech-layer-badge">Versionamento & Deploy</span>
+              </div>
+            </div>
+            <p class="tech-desc">Controle de versão semântico, documentação técnica estruturada e publicação automatizada via GitHub Pages.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         4.7 EQUIPE DO PROJETO
+         ========================================== -->
+    <section id="equipe" class="section section-alt" aria-label="Equipe do Projeto">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">Desenvolvimento & Autoria</div>
+          <h2 class="section-title">Equipe Responsável pelo Projeto</h2>
+          <p class="section-subtitle">
+            Projeto interdisciplinar unindo Engenharia de Software, Internet das Coisas e Gestão de Energia.
+          </p>
+        </div>
+
+        <div class="team-container">
+          <div class="team-card">
+            <!-- Avatar / Foto do Integrante -->
+            <div class="team-avatar-wrapper">
+              <div class="team-avatar-frame">
+                <!-- Ilustração Vetorial Profissional de Desenvolvedor -->
+                <svg class="team-avatar-svg" viewBox="0 0 100 100" fill="none">
+                  <circle cx="50" cy="50" r="50" fill="#151D2A"/>
+                  <circle cx="50" cy="38" r="18" fill="#FFD700"/>
+                  <path d="M22 84 C22 66 34 58 50 58 C66 58 78 66 78 84 Z" fill="#2C384E"/>
+                  <path d="M42 34 Q50 26 58 34" stroke="#0B0E14" stroke-width="3" fill="none"/>
+                  <circle cx="43" cy="38" r="2.5" fill="#0B0E14"/>
+                  <circle cx="57" cy="38" r="2.5" fill="#0B0E14"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Dados e Responsabilidades do Integrante -->
+            <div class="team-info">
+              <h3 class="team-name">Giovanni Correa Amadio</h3>
+              <div class="team-role">Líder do Projeto & Engenheiro Full Stack / IoT</div>
+              <p class="team-bio">
+                Responsável pela concepção da arquitetura fim-a-fim do ecossistema E-Energy: desenvolvimento do firmware C++ para amostragem True RMS no ESP32, estruturação dos microsserviços Node.js/Express, modelagem de banco de dados MongoDB Atlas, criação do aplicativo mobile React Native/Expo com geração de laudos em PDF e implementação da camada de segurança Zero Trust.
+              </p>
+
+              <!-- Competências e Papéis -->
+              <div class="team-skills-list">
+                <span class="team-skill-pill">Arquitetura de Sistemas</span>
+                <span class="team-skill-pill">Firmware ESP32 / C++</span>
+                <span class="team-skill-pill">Node.js & Express 5</span>
+                <span class="team-skill-pill">React Native & Expo</span>
+                <span class="team-skill-pill">MongoDB Atlas</span>
+                <span class="team-skill-pill">Segurança HMAC</span>
+              </div>
+
+              <!-- Links e Redes -->
+              <div class="team-socials">
+                <a href="https://github.com/JUCAGIO1" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" title="GitHub de Giovanni Correa Amadio">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                  <span>@JUCAGIO1</span>
+                </a>
+                <a href="https://www.instagram.com/_e__energy" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" title="Instagram Oficial do E-Energy">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                  <span>@_e__energy</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         4.9 CHAMADA PARA AÇÃO (CTA FINAL)
+         ========================================== -->
+    <section class="cta-section" aria-label="Chamada para Ação">
+      <div class="container">
+        <div class="cta-box">
+          <h2 class="cta-title">
+            Pronto para Assumir o Controle da Energia da sua Casa?
+          </h2>
+          <p class="cta-text">
+            O E-Energy é um projeto de código aberto, concebido para transformar a forma como você enxerga e gerencia o consumo elétrico diário. Explore o código-fonte ou faça sua primeira simulação agora.
+          </p>
+
+          <div class="cta-buttons">
+            <a href="#calculadora" class="btn btn-primary btn-lg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              Calcular Economia Agora
+            </a>
+            <a href="https://github.com/JUCAGIO1/E-Energy" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-lg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+              Repositório no GitHub
+            </a>
+            <a href="https://www.instagram.com/_e__energy" target="_blank" rel="noopener noreferrer" class="btn btn-outline-cyan btn-lg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+              Instagram Oficial
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================
+       RODAPÉ (FOOTER)
+       ========================================== -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-top">
+        <!-- Coluna 1: Marca e Descrição -->
+        <div>
+          <div class="footer-brand-title">
+            <img src="img/logo.png" alt="E-Energy Logo" style="height: 32px; width: auto; border-radius: 4px;">
+            <span class="footer-brand-name">E-ENERGY</span>
+          </div>
+          <p class="footer-brand-desc">
+            Plataforma de Internet das Coisas (IoT) voltada à auditoria em tempo real, inteligência financeira e eficiência energética residencial.
+          </p>
+        </div>
+
+        <!-- Coluna 2: Navegação Rápida -->
+        <div>
+          <div class="footer-col-title">Navegação</div>
+          <ul class="footer-links-list">
+            <li><a href="#inicio" class="footer-link">Início</a></li>
+            <li><a href="#sobre" class="footer-link">Sobre o Projeto</a></li>
+            <li><a href="#problema-solucao" class="footer-link">Problema & Solução</a></li>
+            <li><a href="#publico" class="footer-link">Público-Alvo</a></li>
+            <li><a href="#funcionalidades" class="footer-link">Funcionalidades</a></li>
+          </ul>
+        </div>
+
+        <!-- Coluna 3: Recursos e Ferramentas -->
+        <div>
+          <div class="footer-col-title">Ferramentas</div>
+          <ul class="footer-links-list">
+            <li><a href="#calculadora" class="footer-link">Calculadora Tarifária SP</a></li>
+            <li><a href="#tecnologias" class="footer-link">Stack Tecnológica</a></li>
+            <li><a href="#equipe" class="footer-link">Equipe de Desenvolvimento</a></li>
+            <li><a href="https://github.com/JUCAGIO1/E-Energy" target="_blank" rel="noopener noreferrer" class="footer-link">Documentação Técnica</a></li>
+          </ul>
+        </div>
+
+        <!-- Coluna 4: Canais Oficiais -->
+        <div>
+          <div class="footer-col-title">Contato & Redes</div>
+          <ul class="footer-links-list">
+            <li>
+              <a href="https://www.instagram.com/_e__energy" target="_blank" rel="noopener noreferrer" class="footer-link" style="display:flex; align-items:center; gap:8px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path></svg>
+                <span>@_e__energy</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/JUCAGIO1/E-Energy" target="_blank" rel="noopener noreferrer" class="footer-link" style="display:flex; align-items:center; gap:8px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                <span>GitHub E-Energy</span>
+              </a>
+            </li>
+            <li>
+              <span class="footer-link" style="color:var(--text-dim);">Programação Web III &bull; AMS</span>
+            </li>
+          </ul>
+        </div>
       </div>
 
-      <div class="sec-card">
-        <h4>Anti-DDoS & RateLimiter</h4>
-        <p>Sistema de limitação de requisições por IP no backend Express, bloqueando robôs e ataques de negação de serviço ao vivo.</p>
-      </div>
-
-      <div class="sec-card">
-        <h4>Proteção Anti-Injeção NoSQL</h4>
-        <p>Filtros de sanitização de pacotes removendo operadores maliciosos para garantir total integridade no banco de dados MongoDB Atlas.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Seção do TCC & Sobre o Projeto -->
-  <section id="tcc" class="tcc-section">
-    <div class="tcc-container">
-      <h2>Projeto de Conclusão de Curso (TCC)</h2>
-      <p>
-        O <strong>E-Energy</strong> nasceu como um projeto de conclusão de curso com a visão de revolucionar a eficiência energética em residências e pequenos comércios. Combinando Engenharia de Hardware, Internet das Coisas (IoT), Desenvolvimento Mobile e Segurança da Informação, o projeto está preparado para evolução em Startup de tecnologia.
-      </p>
-      <div class="tcc-badge">Engenharia / Tecnologia da Informação</div>
-    </div>
-  </section>
-
-  <!-- Footer com Instagram e GitHub -->
-  <footer class="footer">
-    <div class="footer-container">
-      <div class="footer-brand">
-        <span>E-ENERGY</span>
-        <p>Sistema de Monitoramento Elétrico Residencial</p>
-      </div>
-
-      <div class="footer-socials">
-        <!-- Link do Instagram oficial -->
-        <a href="https://www.instagram.com/_e__energy" target="_blank" rel="noopener noreferrer" class="social-link" title="Instagram Oficial @_e__energy">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-          </svg>
-          <span>@_e__energy</span>
-        </a>
-
-        <!-- Link do Repositório GitHub -->
-        <a href="https://github.com/JUCAGIO1/E-Energy" target="_blank" rel="noopener noreferrer" class="social-link" title="Repositório GitHub">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-          </svg>
-          <span>GitHub</span>
-        </a>
-      </div>
-
-      <div class="footer-copy">
-        E-Energy &copy; 2026 - Todos os direitos reservados.
+      <!-- Barra Inferior de Direitos e Créditos -->
+      <div class="footer-bottom">
+        <div class="footer-copy">
+          &copy; 2026 E-Energy. Desenvolvido por Giovanni Correa Amadio para a disciplina de Programação Web III (AMS). Todos os direitos reservados.
+        </div>
+        <div class="footer-social-icons">
+          <a href="https://www.instagram.com/_e__energy" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="Instagram Oficial" aria-label="Instagram E-Energy">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </a>
+          <a href="https://github.com/JUCAGIO1/E-Energy" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="Repositório GitHub" aria-label="GitHub E-Energy">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          </a>
+        </div>
       </div>
     </div>
   </footer>
 
+  <!-- Script Principal -->
+  <script src="js/script.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

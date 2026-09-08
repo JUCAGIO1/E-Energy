@@ -36,28 +36,78 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Fecha o menu mobile ao clicar em qualquer link
+    // Fecha o menu mobile ao clicar em qualquer link simples
     navLinks.forEach(link => {
       link.addEventListener('click', () => {
         navMenu.classList.remove('active');
         mobileToggle.setAttribute('aria-expanded', 'false');
-        const svgIcon = mobileToggle.querySelector('svg');
-        if (svgIcon) {
-          svgIcon.innerHTML = `
-            <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-            <line x1="3" y1="12" x2="21" y2="12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-            <line x1="3" y1="18" x2="21" y2="18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-          `;
-        }
+        resetMobileIcon();
+      });
+    });
+
+    // Suporte a clique nos itens de dropdown para fechar o menu mobile
+    const dropdownItems = document.querySelectorAll('.dropdown-item');
+    dropdownItems.forEach(item => {
+      item.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        mobileToggle.setAttribute('aria-expanded', 'false');
+        resetMobileIcon();
+      });
+    });
+
+    function resetMobileIcon() {
+      const svgIcon = mobileToggle.querySelector('svg');
+      if (svgIcon) {
+        svgIcon.innerHTML = `
+          <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="3" y1="12" x2="21" y2="12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="3" y1="18" x2="21" y2="18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        `;
+      }
+    }
+
+    // Suporte a clique / touch nos toggles de dropdown
+    const dropdownToggles = document.querySelectorAll('.nav-dropdown-toggle');
+    dropdownToggles.forEach(toggle => {
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const parent = toggle.closest('.nav-dropdown');
+        const isOpen = parent.classList.contains('open');
+
+        // Fecha outros dropdowns abertos
+        dropdownToggles.forEach(other => {
+          if (other !== toggle) {
+            other.setAttribute('aria-expanded', 'false');
+            other.closest('.nav-dropdown')?.classList.remove('open');
+          }
+        });
+
+        toggle.setAttribute('aria-expanded', String(!isOpen));
+        parent.classList.toggle('open', !isOpen);
+      });
+    });
+
+    // Fecha dropdowns se clicar fora no documento
+    document.addEventListener('click', () => {
+      dropdownToggles.forEach(toggle => {
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.closest('.nav-dropdown')?.classList.remove('open');
       });
     });
 
     // Fecha ao pressionar ESC
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && navMenu.classList.contains('active')) {
-        navMenu.classList.remove('active');
-        mobileToggle.setAttribute('aria-expanded', 'false');
-        mobileToggle.focus();
+      if (e.key === 'Escape') {
+        if (navMenu.classList.contains('active')) {
+          navMenu.classList.remove('active');
+          mobileToggle.setAttribute('aria-expanded', 'false');
+          resetMobileIcon();
+          mobileToggle.focus();
+        }
+        dropdownToggles.forEach(toggle => {
+          toggle.setAttribute('aria-expanded', 'false');
+          toggle.closest('.nav-dropdown')?.classList.remove('open');
+        });
       }
     });
   }

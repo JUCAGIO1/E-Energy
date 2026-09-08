@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none">
+  <defs>
+    <linearGradient id="favGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE144"/>
+      <stop offset="100%" stop-color="#FFB800"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background Yellow Badge -->
+  <rect x="3" y="3" width="58" height="58" rx="10" fill="url(#favGold)" stroke="#0B0E14" stroke-width="4"/>
+
+  <!-- Plug Prongs -->
+  <rect x="22" y="11" width="4.5" height="10" rx="2" fill="#0B0E14"/>
+  <rect x="37.5" y="11" width="4.5" height="10" rx="2" fill="#0B0E14"/>
+
+  <!-- Plug Main Body -->
+  <path d="M16 20 C16 18 18 17 20 17 L44 17 C46 17 48 18 48 20 L48 33 C48 42 41 47 32 47 C23 47 16 42 16 33 Z" 
+        fill="#0B0E14" stroke="#0B0E14" stroke-width="1.5"/>
+
+  <!-- Lightning Bolt Inside Plug -->
+  <path d="M33 22 L27 32 L31.5 32 L30 41 L38 31 L32.5 31 Z" fill="url(#favGold)"/>
+
+  <!-- Cord Loop Below -->
+  <path d="M32 47 C32 53 37 57 41 57 C45 57 48 53 48 49 C48 44 43 43 38 45 C30 48 18 48 8 48" 
+        stroke="#0B0E14" stroke-width="3" stroke-linecap="round" fill="none"/>
+</svg>
